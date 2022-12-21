@@ -25,21 +25,21 @@ void validatorTest(options) {
 
 dynamic callMethod(option, List args) {
   if (option == 'toBoolean') {
-    return Validator.toBoolean(str: args.get(0), strict: args.get(1));
+    return Validator.toBoolean(args.get(0), args.get(1));
   } else if (option == 'ltrim') {
-    return Validator.ltrim(str: args.get(0), chars: args.get(1));
+    return Validator.ltrim(args.get(0), args.get(1));
   } else if (option == 'rtrim') {
-    return Validator.rtrim(str: args.get(0), chars: args.get(1));
+    return Validator.rtrim(args.get(0), args.get(1));
   } else if (option == 'trim') {
-    return Validator.trim(str: args.get(0), chars: args.get(1));
+    return Validator.trim(args.get(0), args.get(1));
   } else if (option == 'toInt') {
-    return Validator.toInt(str: args.get(0), radix: args.get(1));
+    return Validator.toInt(args.get(0), radix: args.get(1));
   } else if (option == 'toFloat') {
-    return Validator.toFloat(str: args.get(0));
+    return Validator.toFloat(args.get(0));
   } else if (option == 'escape') {
-    return Validator.escape(str: args.get(0));
+    return Validator.escape(args.get(0));
   } else if (option == 'unescape') {
-    return Validator.unescape(str: args.get(0));
+    return Validator.unescape(args.get(0));
   } else if (option == 'blacklist') {
     return Validator.blacklist(args.get(0), args.get(1));
   }

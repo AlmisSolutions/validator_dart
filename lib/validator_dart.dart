@@ -16,18 +16,14 @@ import 'package:validator_dart/src/validators/unescape.dart';
 class Validator {
   Validator._();
 
-  static bool toBoolean({dynamic str, bool? strict}) =>
-      $toBoolean(str: str, strict: strict);
-  static String ltrim({dynamic str, String? chars}) =>
-      $ltrim(str: str, chars: chars);
-  static String rtrim({dynamic str, String? chars}) =>
-      $rtrim(str: str, chars: chars);
-  static String trim({dynamic str, String? chars}) =>
-      $trim(str: str, chars: chars);
-  static int? toInt({dynamic str, int? radix = 10}) =>
-      $toInt(str: str, radix: radix);
-  static double toFloat({dynamic str}) => $toFloat(str: str);
-  static String escape({dynamic str}) => $escape(str);
-  static String unescape({dynamic str}) => $unescape(str);
-  static String blacklist(String str, String chars) => $blacklist(str, chars);
+  static bool toBoolean(dynamic str, bool? strict) => $toBoolean(str, strict);
+  static String ltrim(dynamic str, String? chars) => $ltrim(str, chars);
+  static String rtrim(dynamic str, String? chars) => $rtrim(str, chars);
+  static String trim(dynamic str, String? chars) => $trim(str, chars);
+  static int? toInt(dynamic str, {int? radix = 10}) =>
+      $toInt(str, radix: radix);
+  static double toFloat(dynamic str) => $toFloat(str);
+  static String escape(dynamic str) => $escape(str);
+  static String unescape(dynamic str) => $unescape(str);
+  static String blacklist(dynamic str, String chars) => $blacklist(str, chars);
 }
