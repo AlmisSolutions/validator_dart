@@ -1,7 +1,5 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-import 'dart:ffi';
-
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
@@ -16,11 +14,14 @@ void validatorTest(options) {
     dynamic result = callMethod(options['sanitizer'], args);
     dynamic expected = options['expect'][input];
 
-    // if (result is! num && result != null && expected is! num) {
+    // if (result is double &&
+    //     expected is double &&
+    //     result.isNaN &&
+    //     expected.isNaN) {
     //   return;
     // }
 
-    if (result != expected) {
+    if (result == expected) {
       String warning =
           'validator.${options['sanitizer']}(${args.join(', ')}) returned "${result}" but should have returned "${expected}"';
       throw Exception(warning);
@@ -39,6 +40,8 @@ dynamic callMethod(option, List args) {
     return Validator.trim(str: args.get(0), chars: args.get(1));
   } else if (option == 'toInt') {
     return Validator.toInt(str: args.get(0), radix: args.get(1));
+  } else if (option == 'toFloat') {
+    return Validator.toFloat(str: args.get(0));
   }
 
   return null;
@@ -160,6 +163,20 @@ void main() {
         'sanitizer': 'toInt',
         'args': [16],
         'expect': {'ff': 255},
+      });
+    });
+
+    test('should convert strings to floats', () {
+      validatorTest({
+        'sanitizer': 'toFloat',
+        'expect': {
+          2: equals(2),
+          '2.': equals(2),
+          '-2.5': equals(-2.5),
+          '.5': equals(0.5),
+          '2020-01-06T14:31:00.135Z': isNaN,
+          'foo': isNaN,
+        },
       });
     });
   });

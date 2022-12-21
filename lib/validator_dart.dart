@@ -6,6 +6,7 @@ library validator_dart;
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
 import 'package:validator_dart/src/validators/to_boolean.dart';
+import 'package:validator_dart/src/validators/to_float.dart';
 import 'package:validator_dart/src/validators/to_int.dart';
 import 'package:validator_dart/src/validators/trim.dart';
 
@@ -20,6 +21,7 @@ class Validator {
       $rtrim(str: str, chars: chars);
   static String trim({dynamic str, String? chars}) =>
       $trim(str: str, chars: chars);
-  static int? toInt({dynamic str, int? radix}) =>
-      radix == null ? $toInt(str: str) : $toInt(str: str, radix: radix);
+  static int? toInt({dynamic str, int? radix = 10}) =>
+      $toInt(str: str, radix: radix);
+  static double toFloat({dynamic str}) => $toFloat(str: str);
 }
