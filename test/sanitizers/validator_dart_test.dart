@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
@@ -46,6 +47,8 @@ dynamic callMethod(option, List args) {
     return Validator.whitelist(args.get(0), args.get(1));
   } else if (option == 'blacklist') {
     return Validator.blacklist(args.get(0), args.get(1));
+  } else if (option == 'isStrongPassword') {
+    return Validator.isStrongPassword(args.get(0), options: args.get(1));
   }
 
   return null;
@@ -266,6 +269,44 @@ void main() {
           'aaaaaaaaaabbbbbbbbbb': '',
           'a1b2c3': '123',
           '   ': '   ',
+        },
+      });
+    });
+
+    test('should score passwords', () {
+      validatorTest({
+        'sanitizer': 'isStrongPassword',
+        'args': [
+          PasswordOptions(
+            returnScore: true,
+            pointsPerUnique: 1,
+            pointsPerRepeat: 0.5,
+            pointsForContainingLower: 10,
+            pointsForContainingUpper: 10,
+            pointsForContainingNumber: 10,
+            pointsForContainingSymbol: 10,
+          )
+        ],
+        'expect': {
+          'abc': 13,
+          'abcc': 13.5,
+          'aBc': 23,
+          'Abc123!': 47,
+          '!@#\$%^&*()': 20,
+        },
+      });
+    });
+
+    test('should score passwords with default options', () {
+      validatorTest({
+        'sanitizer': 'isStrongPassword',
+        'expect': {
+          'abc': false,
+          'abcc': false,
+          'aBc': false,
+          'Abc123!': false,
+          '!@#\$%^&*()': false,
+          'abc123!@f#rA': true,
         },
       });
     });
