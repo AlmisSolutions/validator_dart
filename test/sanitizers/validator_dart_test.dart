@@ -33,6 +33,8 @@ dynamic callMethod(option, List args) {
     return Validator.ltrim(str: args.get(0), chars: args.get(1));
   } else if (option == 'rtrim') {
     return Validator.rtrim(str: args.get(0), chars: args.get(1));
+  } else if (option == 'trim') {
+    return Validator.trim(str: args.get(0), chars: args.get(1));
   }
 
   return null;
@@ -81,13 +83,13 @@ void main() {
     });
 
     test('should trim whitespace', () {
-      // validatorTest({
-      //   sanitizer: 'trim',
-      //   expect: {
-      //     '  \r\n\tfoo  \r\n\t   ': 'foo',
-      //     '      \r': '',
-      //   },
-      // });
+      validatorTest({
+        'sanitizer': 'trim',
+        'expect': {
+          '  \r\n\tfoo  \r\n\t   ': 'foo',
+          '      \r': '',
+        },
+      });
 
       validatorTest({
         'sanitizer': 'ltrim',
@@ -107,11 +109,11 @@ void main() {
     });
 
     test('should trim custom characters', () {
-      // validatorTest({
-      //   'sanitizer': 'trim',
-      //   'args': ['01'],
-      //   'expect': {'010100201000': '2'},
-      // });
+      validatorTest({
+        'sanitizer': 'trim',
+        'args': ['01'],
+        'expect': {'010100201000': '2'},
+      });
 
       validatorTest({
         'sanitizer': 'ltrim',
