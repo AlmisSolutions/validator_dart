@@ -40,6 +40,8 @@ dynamic callMethod(option, List args) {
     return Validator.escape(str: args.get(0));
   } else if (option == 'unescape') {
     return Validator.unescape(str: args.get(0));
+  } else if (option == 'blacklist') {
+    return Validator.blacklist(args.get(0), args.get(1));
   }
 
   return null;
@@ -202,6 +204,19 @@ void main() {
               "<script> alert('xss&fun'); </script>",
           'Backtick: &#96;': 'Backtick: `',
           'Escaped string: &amp;lt;': 'Escaped string: &lt;',
+        },
+      });
+    });
+
+    test('should sanitize a string based on a blacklist', () {
+      validatorTest({
+        'sanitizer': 'blacklist',
+        'args': ['abc'],
+        'expect': {
+          'abcdef': 'def',
+          'aaaaaaaaaabbbbbbbbbb': '',
+          'a1b2c3': '123',
+          '   ': '   ',
         },
       });
     });

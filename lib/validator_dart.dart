@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
+import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
@@ -28,4 +29,5 @@ class Validator {
   static double toFloat({dynamic str}) => $toFloat(str: str);
   static String escape({dynamic str}) => $escape(str);
   static String unescape({dynamic str}) => $unescape(str);
+  static String blacklist(String str, String chars) => $blacklist(str, chars);
 }
