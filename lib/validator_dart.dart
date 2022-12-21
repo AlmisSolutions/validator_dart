@@ -3,6 +3,11 @@
 /// More dartdocs go here.
 library validator_dart;
 
-export 'src/validator_dart_base.dart';
+import 'package:validator_dart/src/validators/to_boolean.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+class Validator {
+  Validator._();
+
+  static bool toBoolean({dynamic str, bool? strict}) =>
+      $toBoolean(str: str, strict: strict);
+}
