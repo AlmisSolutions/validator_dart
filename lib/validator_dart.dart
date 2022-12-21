@@ -10,6 +10,7 @@ import 'package:validator_dart/src/validators/to_boolean.dart';
 import 'package:validator_dart/src/validators/to_float.dart';
 import 'package:validator_dart/src/validators/to_int.dart';
 import 'package:validator_dart/src/validators/trim.dart';
+import 'package:validator_dart/src/validators/unescape.dart';
 
 class Validator {
   Validator._();
@@ -26,4 +27,5 @@ class Validator {
       $toInt(str: str, radix: radix);
   static double toFloat({dynamic str}) => $toFloat(str: str);
   static String escape({dynamic str}) => $escape(str);
+  static String unescape({dynamic str}) => $unescape(str);
 }

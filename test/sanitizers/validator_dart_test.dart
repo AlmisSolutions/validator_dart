@@ -38,6 +38,8 @@ dynamic callMethod(option, List args) {
     return Validator.toFloat(str: args.get(0));
   } else if (option == 'escape') {
     return Validator.escape(str: args.get(0));
+  } else if (option == 'unescape') {
+    return Validator.unescape(str: args.get(0));
   }
 
   return null;
@@ -186,6 +188,20 @@ void main() {
               '&lt;script&gt; alert(&#x27;xss&amp;fun&#x27;); &lt;&#x2F;script&gt;',
           'Backtick: `': 'Backtick: &#96;',
           'Backslash: \\': 'Backslash: &#x5C;',
+        },
+      });
+    });
+
+    test('should unescape HTML', () {
+      validatorTest({
+        'sanitizer': 'unescape',
+        'expect': {
+          '&lt;script&gt; alert(&quot;xss&amp;fun&quot;); &lt;&#x2F;script&gt;':
+              '<script> alert("xss&fun"); </script>',
+          '&lt;script&gt; alert(&#x27;xss&amp;fun&#x27;); &lt;&#x2F;script&gt;':
+              "<script> alert('xss&fun'); </script>",
+          'Backtick: &#96;': 'Backtick: `',
+          'Escaped string: &amp;lt;': 'Escaped string: &lt;',
         },
       });
     });
