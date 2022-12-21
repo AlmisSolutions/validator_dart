@@ -13,6 +13,7 @@ import 'package:validator_dart/src/validators/to_float.dart';
 import 'package:validator_dart/src/validators/to_int.dart';
 import 'package:validator_dart/src/validators/trim.dart';
 import 'package:validator_dart/src/validators/unescape.dart';
+import 'package:validator_dart/src/validators/whitelist.dart';
 
 class Validator {
   Validator._();
@@ -28,5 +29,6 @@ class Validator {
   static String unescape(dynamic str) => $unescape(str);
   static String stripLow(dynamic str, {bool? keepNewLines = false}) =>
       $stripLow(str, keepNewLines: keepNewLines);
+  static String whitelist(dynamic str, String chars) => $whitelist(str, chars);
   static String blacklist(dynamic str, String chars) => $blacklist(str, chars);
 }

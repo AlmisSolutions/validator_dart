@@ -40,10 +40,12 @@ dynamic callMethod(option, List args) {
     return Validator.escape(args.get(0));
   } else if (option == 'unescape') {
     return Validator.unescape(args.get(0));
-  } else if (option == 'blacklist') {
-    return Validator.blacklist(args.get(0), args.get(1));
   } else if (option == 'stripLow') {
     return Validator.stripLow(args.get(0), keepNewLines: args.get(1));
+  } else if (option == 'whitelist') {
+    return Validator.whitelist(args.get(0), args.get(1));
+  } else if (option == 'blacklist') {
+    return Validator.blacklist(args.get(0), args.get(1));
   }
 
   return null;
@@ -238,6 +240,19 @@ void main() {
         'expect': {
           'foo\x0A\x0D': 'foo\x0A\x0D',
           '\x03foo\x0A\x0D': 'foo\x0A\x0D',
+        },
+      });
+    });
+
+    test('should sanitize a string based on a whitelist', () {
+      validatorTest({
+        'sanitizer': 'whitelist',
+        'args': ['abc'],
+        'expect': {
+          'abcdef': 'abc',
+          'aaaaaaaaaabbbbbbbbbb': 'aaaaaaaaaabbbbbbbbbb',
+          'a1b2c3': 'abc',
+          '   ': '',
         },
       });
     });
