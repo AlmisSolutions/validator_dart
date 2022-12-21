@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
+import 'dart:ffi';
+
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
@@ -35,6 +37,8 @@ dynamic callMethod(option, List args) {
     return Validator.rtrim(str: args.get(0), chars: args.get(1));
   } else if (option == 'trim') {
     return Validator.trim(str: args.get(0), chars: args.get(1));
+  } else if (option == 'toInt') {
+    return Validator.toInt(str: args.get(0), radix: args.get(1));
   }
 
   return null;
@@ -137,6 +141,25 @@ void main() {
         'sanitizer': 'rtrim',
         'args': ['\\S'],
         'expect': {'01010020100001\\S': '01010020100001'},
+      });
+    });
+
+    test('should convert strings to integers', () {
+      validatorTest({
+        'sanitizer': 'toInt',
+        'expect': {
+          3: 3,
+          ' 3 ': 3,
+          2.4: 2,
+          // cannot return NaN like in JS version because NaN is double
+          'foo': null,
+        },
+      });
+
+      validatorTest({
+        'sanitizer': 'toInt',
+        'args': [16],
+        'expect': {'ff': 255},
       });
     });
   });
