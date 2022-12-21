@@ -29,6 +29,8 @@ void validatorTest(options) {
 dynamic callMethod(option, List args) {
   if (option == 'toBoolean') {
     return Validator.toBoolean(str: args.get(0), strict: args.get(1));
+  } else if (option == 'ltrim') {
+    return Validator.ltrim(str: args.get(0), chars: args.get(1));
   }
 
   return null;
@@ -74,6 +76,64 @@ void main() {
           'FALSE': false,
         },
       });
+    });
+
+    test('should trim whitespace', () {
+      // validatorTest({
+      //   sanitizer: 'trim',
+      //   expect: {
+      //     '  \r\n\tfoo  \r\n\t   ': 'foo',
+      //     '      \r': '',
+      //   },
+      // });
+
+      validatorTest({
+        'sanitizer': 'ltrim',
+        'expect': {
+          '  \r\n\tfoo  \r\n\t   ': 'foo  \r\n\t   ',
+          '   \t  \n': '',
+        },
+      });
+
+      // validatorTest({
+      //   sanitizer: 'rtrim',
+      //   expect: {
+      //     '  \r\n\tfoo  \r\n\t   ': '  \r\n\tfoo',
+      //     ' \r\n  \t': '',
+      //   },
+      // });
+    });
+
+    test('should trim custom characters', () {
+      // validatorTest({
+      //   'sanitizer': 'trim',
+      //   'args': ['01'],
+      //   'expect': {'010100201000': '2'},
+      // });
+
+      validatorTest({
+        'sanitizer': 'ltrim',
+        'args': ['01'],
+        'expect': {'010100201000': '201000'},
+      });
+
+      validatorTest({
+        'sanitizer': 'ltrim',
+        'args': ['\\S'],
+        'expect': {'\\S01010020100001': '01010020100001'},
+      });
+
+      // validatorTest({
+      //   'sanitizer': 'rtrim',
+      //   'args': ['01'],
+      //   'expect': {'010100201000': '0101002'},
+      // });
+
+      // validatorTest({
+      //   'sanitizer': 'rtrim',
+      //   'args': ['\\S'],
+      //   'expect': {'01010020100001\\S': '01010020100001'},
+      // });
     });
   });
 }
