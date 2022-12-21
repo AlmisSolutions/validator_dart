@@ -42,6 +42,8 @@ dynamic callMethod(option, List args) {
     return Validator.unescape(args.get(0));
   } else if (option == 'blacklist') {
     return Validator.blacklist(args.get(0), args.get(1));
+  } else if (option == 'stripLow') {
+    return Validator.stripLow(args.get(0), keepNewLines: args.get(1));
   }
 
   return null;
@@ -204,6 +206,38 @@ void main() {
               "<script> alert('xss&fun'); </script>",
           'Backtick: &#96;': 'Backtick: `',
           'Escaped string: &amp;lt;': 'Escaped string: &lt;',
+        },
+      });
+    });
+
+    test('should remove control characters (<32 and 127)', () {
+      // Check basic functionality
+      validatorTest({
+        'sanitizer': 'stripLow',
+        'expect': {
+          'foo\x00': 'foo',
+          '\x7Ffoo\x02': 'foo',
+          '\x01\x09': '',
+          'foo\x0A\x0D': 'foo',
+        },
+      });
+      // Unicode safety
+      validatorTest({
+        'sanitizer': 'stripLow',
+        'expect': {
+          'perché': 'perch\u00e9',
+          '\u20ac': '\u20ac',
+          '\u2206\x0A': '\u2206',
+          '\ud83d\ude04': '\ud83d\ude04',
+        },
+      });
+      // Preserve newlines
+      validatorTest({
+        'sanitizer': 'stripLow',
+        'args': [true], // keep_new_lines
+        'expect': {
+          'foo\x0A\x0D': 'foo\x0A\x0D',
+          '\x03foo\x0A\x0D': 'foo\x0A\x0D',
         },
       });
     });

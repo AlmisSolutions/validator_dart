@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
+import 'package:validator_dart/src/validators/strip_low.dart';
 import 'package:validator_dart/src/validators/to_boolean.dart';
 import 'package:validator_dart/src/validators/to_float.dart';
 import 'package:validator_dart/src/validators/to_int.dart';
@@ -25,5 +26,7 @@ class Validator {
   static double toFloat(dynamic str) => $toFloat(str);
   static String escape(dynamic str) => $escape(str);
   static String unescape(dynamic str) => $unescape(str);
+  static String stripLow(dynamic str, {bool? keepNewLines = false}) =>
+      $stripLow(str, keepNewLines: keepNewLines);
   static String blacklist(dynamic str, String chars) => $blacklist(str, chars);
 }
