@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
+import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
 import 'package:validator_dart/src/validators/to_boolean.dart';
@@ -24,4 +25,5 @@ class Validator {
   static int? toInt({dynamic str, int? radix = 10}) =>
       $toInt(str: str, radix: radix);
   static double toFloat({dynamic str}) => $toFloat(str: str);
+  static String escape({dynamic str}) => $escape(str);
 }

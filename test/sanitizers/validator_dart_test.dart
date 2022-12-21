@@ -14,14 +14,8 @@ void validatorTest(options) {
     dynamic result = callMethod(options['sanitizer'], args);
     dynamic expected = options['expect'][input];
 
-    // if (result is double &&
-    //     expected is double &&
-    //     result.isNaN &&
-    //     expected.isNaN) {
-    //   return;
-    // }
-
-    if (result == expected) {
+    // identical is used for double.nan values
+    if (result != expected && !identical(result, expected)) {
       String warning =
           'validator.${options['sanitizer']}(${args.join(', ')}) returned "${result}" but should have returned "${expected}"';
       throw Exception(warning);
@@ -42,6 +36,8 @@ dynamic callMethod(option, List args) {
     return Validator.toInt(str: args.get(0), radix: args.get(1));
   } else if (option == 'toFloat') {
     return Validator.toFloat(str: args.get(0));
+  } else if (option == 'escape') {
+    return Validator.escape(str: args.get(0));
   }
 
   return null;
@@ -170,12 +166,26 @@ void main() {
       validatorTest({
         'sanitizer': 'toFloat',
         'expect': {
-          2: equals(2),
-          '2.': equals(2),
-          '-2.5': equals(-2.5),
-          '.5': equals(0.5),
-          '2020-01-06T14:31:00.135Z': isNaN,
-          'foo': isNaN,
+          2: 2,
+          '2.': 2,
+          '-2.5': -2.5,
+          '.5': 0.5,
+          '2020-01-06T14:31:00.135Z': double.nan,
+          'foo': double.nan,
+        },
+      });
+    });
+
+    test('should escape HTML', () {
+      validatorTest({
+        'sanitizer': 'escape',
+        'expect': {
+          '<script> alert("xss&fun"); </script>':
+              '&lt;script&gt; alert(&quot;xss&amp;fun&quot;); &lt;&#x2F;script&gt;',
+          "<script> alert('xss&fun'); </script>":
+              '&lt;script&gt; alert(&#x27;xss&amp;fun&#x27;); &lt;&#x2F;script&gt;',
+          'Backtick: `': 'Backtick: &#96;',
+          'Backslash: \\': 'Backslash: &#x5C;',
         },
       });
     });
