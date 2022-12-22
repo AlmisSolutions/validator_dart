@@ -1,5 +1,5 @@
-extension ListExtensions on List {
-  dynamic get(index) {
+extension ListExtensions<T> on List<T> {
+  T? get(index) {
     return length > index ? this[index] : null;
   }
 }
