@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/normalize_email.dart';
@@ -19,7 +17,7 @@ void validatorTest(options) {
     // identical is used for double.nan values
     if (result != expected && !identical(result, expected)) {
       String warning =
-          'validator.${options['sanitizer']}(${args.join(', ')}) returned "${result}" but should have returned "${expected}"';
+          'validator.${options['sanitizer']}(${args.join(', ')}) returned "$result" but should have returned "$expected"';
       throw Exception(warning);
     }
   });
@@ -59,10 +57,6 @@ dynamic callMethod(option, List args) {
 
 void main() {
   group('Sanitizers', () {
-    setUp(() {
-      // Additional setup goes here.
-    });
-
     test('should sanitize boolean strings', () {
       validatorTest({
         'sanitizer': 'toBoolean',
