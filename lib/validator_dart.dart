@@ -5,6 +5,7 @@ library validator_dart;
 
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
+import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
@@ -39,5 +40,7 @@ class Validator {
   static dynamic normalizeEmail(String email,
           {EmailNormalizationOptions? options}) =>
       $normalizeEmail(email, options: options);
+  static bool isByteLength(String str, {ByteLengthOptions? options}) =>
+      $isByteLength(str, options: options);
   static bool isUppercase(dynamic str) => $isUppercase(str);
 }

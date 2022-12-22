@@ -1,8 +1,7 @@
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
-
-import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -47,7 +46,9 @@ void validatorTest(Map<String, dynamic> options) {
 }
 
 dynamic callMethod(option, List args) {
-  if (option == 'isUppercase') {
+  if (option == 'isByteLength') {
+    return Validator.isByteLength(args.get(0), options: args.get(1));
+  } else if (option == 'isUppercase') {
     return Validator.isUppercase(args.get(0));
   }
 
@@ -63,6 +64,27 @@ String repeat(String str, int count) {
 }
 
 void main() {
+  test('should validate strings by byte length (deprecated api)', () {
+    validatorTest({
+      'validator': 'isByteLength',
+      'args': [ByteLengthOptions(min: 2)],
+      'valid': ['abc', 'de', 'abcd', 'ｇｍａｉｌ'],
+      'invalid': ['', 'a'],
+    });
+    validatorTest({
+      'validator': 'isByteLength',
+      'args': [ByteLengthOptions(min: 2, max: 3)],
+      'valid': ['abc', 'de', 'ｇ'],
+      'invalid': ['', 'a', 'abcd', 'ｇｍ'],
+    });
+    validatorTest({
+      'validator': 'isByteLength',
+      'args': [ByteLengthOptions(min: 0, max: 0)],
+      'valid': [''],
+      'invalid': ['ｇ', 'a'],
+    });
+  });
+
   test('should validate uppercase strings', () {
     validatorTest({
       'validator': 'isUppercase',
