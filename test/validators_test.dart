@@ -1,5 +1,6 @@
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
+import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
@@ -48,6 +49,8 @@ void validatorTest(Map<String, dynamic> options) {
 dynamic callMethod(option, List args) {
   if (option == 'isIP') {
     return Validator.isIP(args.get(0), version: args.get(1));
+  } else if (option == 'isFQDN') {
+    return Validator.isFQDN(args.get(0), options: args.get(1));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isUppercase') {
@@ -195,6 +198,123 @@ void main() {
         '1.2.3.4',
         '::1',
         '2001:db8:0000:1:1:1:1:1',
+      ],
+    });
+  });
+
+  test('should validate FQDN', () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'valid': [
+        'domain.com',
+        'dom.plato',
+        'a.domain.co',
+        'foo--bar.com',
+        'xn--froschgrn-x9a.com',
+        'rebecca.blackfriday',
+        '1337.com',
+      ],
+      'invalid': [
+        'abc',
+        '256.0.0.0',
+        '_.com',
+        '*.some.com',
+        's!ome.com',
+        'domain.com/',
+        '/more.com',
+        'domain.com�',
+        'domain.co\u00A0m',
+        'domain.co\u1680m',
+        'domain.co\u2006m',
+        'domain.co\u2028m',
+        'domain.co\u2029m',
+        'domain.co\u202Fm',
+        'domain.co\u205Fm',
+        'domain.co\u3000m',
+        'domain.com\uDC00',
+        'domain.co\uEFFFm',
+        'domain.co\uFDDAm',
+        'domain.co\uFFF4m',
+        'domain.com©',
+        'example.0',
+        '192.168.0.9999',
+        '192.168.0',
+      ],
+    });
+  });
+  test('should validate FQDN with trailing dot option', () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'args': [
+        FqdnOptions(
+          allowTrailingDot: true,
+        )
+      ],
+      'valid': [
+        'example.com.',
+      ],
+    });
+  });
+  test('should invalidate FQDN when not require_tld', () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'args': [
+        FqdnOptions(
+          requireTld: true,
+        )
+      ],
+      'invalid': [
+        'example.0',
+        '192.168.0',
+        '192.168.0.9999',
+      ],
+    });
+  });
+  test('should validate FQDN when not require_tld but allow_numeric_tld', () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'args': [
+        FqdnOptions(
+          allowNumericTld: true,
+          requireTld: false,
+        )
+      ],
+      'valid': [
+        'example.0',
+        '192.168.0',
+        '192.168.0.9999',
+      ],
+    });
+  });
+  test('should validate FQDN with wildcard option', () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'args': [
+        FqdnOptions(
+          allowWildcard: true,
+        )
+      ],
+      'valid': [
+        '*.example.com',
+        '*.shop.example.com',
+      ],
+    });
+  });
+  test(
+      'should validate FQDN with required allow_trailing_dot, allow_underscores and allow_numeric_tld options',
+      () {
+    validatorTest({
+      'validator': 'isFQDN',
+      'args': [
+        FqdnOptions(
+          allowTrailingDot: true,
+          allowUnderscores: true,
+          allowNumericTld: true,
+        ),
+      ],
+      'valid': [
+        'abc.efg.g1h.',
+        'as1s.sad3s.ssa2d.',
       ],
     });
   });
