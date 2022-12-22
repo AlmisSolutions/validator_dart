@@ -1,4 +1,5 @@
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
@@ -62,6 +63,9 @@ dynamic callMethod(option, List args) {
     return Validator.isIPRange(args.get(0), version: args.get(1));
   } else if (option == 'isFQDN') {
     return Validator.isFQDN(args.get(0), options: args.get(1));
+  } else if (option == 'isAlpha') {
+    return Validator.isAlpha(args.get(0),
+        locale: args.get(1), options: args.get(2));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isUppercase') {
@@ -1482,6 +1486,735 @@ void main() {
       'valid': [
         'abc.efg.g1h.',
         'as1s.sad3s.ssa2d.',
+      ],
+    });
+  });
+
+  test('should validate alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'valid': [
+        'abc',
+        'ABC',
+        'FoObar',
+      ],
+      'invalid': [
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate alpha string with ignored characters', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['en-US', AlphaOptions(ignore: '- /')], // ignore [space-/]
+      'valid': [
+        'en-US',
+        'this is a valid alpha string',
+        'us/usa',
+      ],
+      'invalid': [
+        '1. this is not a valid alpha string',
+        'this\$is also not a valid.alpha string',
+        'this is also not a valid alpha string.',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': [
+        'en-US',
+        AlphaOptions(ignore: RegExp(r'[\s/-]'))
+      ], // ignore [space -]
+      'valid': [
+        'en-US',
+        'this is a valid alpha string',
+      ],
+      'invalid': [
+        '1. this is not a valid alpha string',
+        'this\$is also not a valid.alpha string',
+        'this is also not a valid alpha string.',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['en-US', AlphaOptions(ignore: 1234)], // invalid ignore matcher
+      'error': [
+        'alpha',
+      ],
+    });
+  });
+
+  test('should validate Azerbaijani alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['az-AZ'],
+      'valid': [
+        'Azərbaycan',
+        'Bakı',
+        'üöğıəçş',
+        'sizAzərbaycanlaşdırılmışlardansınızmı',
+        'dahaBirDüzgünString',
+        'abcçdeəfgğhxıijkqlmnoöprsştuüvyz',
+      ],
+      'invalid': [
+        'rəqəm1',
+        '  foo  ',
+        '',
+        'ab(cd)',
+        'simvol@',
+        'wəkil',
+      ],
+    });
+  });
+
+  test('should validate bulgarian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['bg-BG'],
+      'valid': [
+        'абв',
+        'АБВ',
+        'жаба',
+        'яГоДа',
+      ],
+      'invalid': [
+        'abc1',
+        '  foo  ',
+        '',
+        'ЁЧПС',
+        '_аз_обичам_обувки_',
+        'ехо!',
+      ],
+    });
+  });
+
+  test('should validate Bengali alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['bn-BD'],
+      'valid': [
+        'অয়াওর',
+        'ফগফদ্রত',
+        'ফদ্ম্যতভ',
+        'বেরেওভচনভন',
+        'আমারবাসগা',
+      ],
+      'invalid': [
+        'দাস২৩৪',
+        '  দ্গফহ্নভ  ',
+        '',
+        '(গফদ)',
+      ],
+    });
+  });
+
+  test('should validate czech alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['cs-CZ'],
+      'valid': [
+        'žluťoučký',
+        'KŮŇ',
+        'Pěl',
+        'Ďábelské',
+        'ódy',
+      ],
+      'invalid': [
+        'ábc1',
+        '  fůj  ',
+        '',
+      ],
+    });
+  });
+
+  test('should validate slovak alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['sk-SK'],
+      'valid': [
+        'môj',
+        'ľúbím',
+        'mäkčeň',
+        'stĹp',
+        'vŕba',
+        'ňorimberk',
+        'ťava',
+        'žanéta',
+        'Ďábelské',
+        'ódy',
+      ],
+      'invalid': [
+        '1moj',
+        '你好世界',
+        '  Привет мир  ',
+        'مرحبا العا ',
+      ],
+    });
+  });
+
+  test('should validate danish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['da-DK'],
+      'valid': [
+        'aøå',
+        'Ære',
+        'Øre',
+        'Åre',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        '',
+      ],
+    });
+  });
+
+  test('should validate dutch alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['nl-NL'],
+      'valid': [
+        'Kán',
+        'één',
+        'vóór',
+        'nú',
+        'héél',
+      ],
+      'invalid': [
+        'äca ',
+        'abcß',
+        'Øre',
+      ],
+    });
+  });
+
+  test('should validate german alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['de-DE'],
+      'valid': [
+        'äbc',
+        'ÄBC',
+        'FöÖbär',
+        'Heiß',
+      ],
+      'invalid': [
+        'äbc1',
+        '  föö  ',
+        '',
+      ],
+    });
+  });
+
+  test('should validate hungarian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['hu-HU'],
+      'valid': [
+        'árvíztűrőtükörfúrógép',
+        'ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉP',
+      ],
+      'invalid': [
+        'äbc1',
+        '  fäö  ',
+        'Heiß',
+        '',
+      ],
+    });
+  });
+
+  test('should validate portuguese alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['pt-PT'],
+      'valid': [
+        'palíndromo',
+        'órgão',
+        'qwértyúão',
+        'àäãcëüïÄÏÜ',
+      ],
+      'invalid': [
+        '12abc',
+        'Heiß',
+        'Øre',
+        'æøå',
+        '',
+      ],
+    });
+  });
+
+  test('should validate italian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['it-IT'],
+      'valid': [
+        'àéèìîóòù',
+        'correnti',
+        'DEFINIZIONE',
+        'compilazione',
+        'metró',
+        'pèsca',
+        'PÉSCA',
+        'genî',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        'æøå',
+        '',
+      ],
+    });
+  });
+
+  test('should validate Japanese alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['ja-JP'],
+      'valid': [
+        'あいうえお',
+        'がぎぐげご',
+        'ぁぃぅぇぉ',
+        'アイウエオ',
+        'ァィゥェ',
+        'ｱｲｳｴｵ',
+        '吾輩は猫である',
+        '臥薪嘗胆',
+        '新世紀エヴァンゲリオン',
+        '天国と地獄',
+        '七人の侍',
+        'シン・ウルトラマン',
+      ],
+      'invalid': [
+        'あいう123',
+        'abcあいう',
+        '１９８４',
+      ],
+    });
+  });
+
+  test('should validate Vietnamese alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['vi-VN'],
+      'valid': [
+        'thiến',
+        'nghiêng',
+        'xin',
+        'chào',
+        'thế',
+        'giới',
+      ],
+      'invalid': [
+        'thầy3',
+        'Ba gà',
+        '',
+      ],
+    });
+  });
+
+  test('should validate arabic alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['ar'],
+      'valid': [
+        'أبت',
+        'اَبِتَثّجً',
+      ],
+      'invalid': [
+        '١٢٣أبت',
+        '١٢٣',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate farsi alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['fa-IR'],
+      'valid': [
+        'پدر',
+        'مادر',
+        'برادر',
+        'خواهر',
+      ],
+      'invalid': [
+        'فارسی۱۲۳',
+        '۱۶۴',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate finnish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['fi-FI'],
+      'valid': [
+        'äiti',
+        'Öljy',
+        'Åke',
+        'testÖ',
+      ],
+      'invalid': [
+        'AİıÖöÇçŞşĞğÜüZ',
+        'äöå123',
+        '',
+      ],
+    });
+  });
+
+  test('should validate kurdish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['ku-IQ'],
+      'valid': [
+        'ئؤڤگێ',
+        'کوردستان',
+      ],
+      'invalid': [
+        'ئؤڤگێ١٢٣',
+        '١٢٣',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate norwegian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['nb-NO'],
+      'valid': [
+        'aøå',
+        'Ære',
+        'Øre',
+        'Åre',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        '',
+      ],
+    });
+  });
+
+  test('should validate polish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['pl-PL'],
+      'valid': [
+        'kreską',
+        'zamknięte',
+        'zwykłe',
+        'kropką',
+        'przyjęły',
+        'święty',
+        'Pozwól',
+      ],
+      'invalid': [
+        '12řiď ',
+        'blé!!',
+        'föö!2!',
+      ],
+    });
+  });
+
+  test('should validate serbian cyrillic alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['sr-RS'],
+      'valid': [
+        'ШћжЂљЕ',
+        'ЧПСТЋЏ',
+      ],
+      'invalid': [
+        'řiď ',
+        'blé33!!',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate serbian latin alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['sr-RS@latin'],
+      'valid': [
+        'ŠAabčšđćž',
+        'ŠATROĆčđš',
+      ],
+      'invalid': [
+        '12řiď ',
+        'blé!!',
+        'föö!2!',
+      ],
+    });
+  });
+
+  test('should validate spanish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['es-ES'],
+      'valid': [
+        'ábcó',
+        'ÁBCÓ',
+        'dormís',
+        'volvés',
+        'español',
+      ],
+      'invalid': [
+        'äca ',
+        'abcß',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate swedish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['sv-SE'],
+      'valid': [
+        'religiös',
+        'stjäla',
+        'västgöte',
+        'Åre',
+      ],
+      'invalid': [
+        'AİıÖöÇçŞşĞğÜüZ',
+        'religiös23',
+        '',
+      ],
+    });
+  });
+
+  test('should validate defined arabic locales alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['ar-SY'],
+      'valid': [
+        'أبت',
+        'اَبِتَثّجً',
+      ],
+      'invalid': [
+        '١٢٣أبت',
+        '١٢٣',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate turkish alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['tr-TR'],
+      'valid': [
+        'AİıÖöÇçŞşĞğÜüZ',
+      ],
+      'invalid': [
+        '0AİıÖöÇçŞşĞğÜüZ1',
+        '  AİıÖöÇçŞşĞğÜüZ  ',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'Heiß',
+      ],
+    });
+  });
+
+  test('should validate urkrainian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['uk-UA'],
+      'valid': [
+        'АБВГҐДЕЄЖЗИIЇЙКЛМНОПРСТУФХЦШЩЬЮЯ',
+      ],
+      'invalid': [
+        '0AİıÖöÇçŞşĞğÜüZ1',
+        '  AİıÖöÇçŞşĞğÜüZ  ',
+        'abc1',
+        '  foo  ',
+        '',
+        'ÄBC',
+        'Heiß',
+        'ЫыЪъЭэ',
+      ],
+    });
+  });
+
+  test('should validate greek alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['el-GR'],
+      'valid': [
+        'αβγδεζηθικλμνξοπρςστυφχψω',
+        'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ',
+        'άέήίΰϊϋόύώ',
+        'ΆΈΉΊΪΫΎΏ',
+      ],
+      'invalid': [
+        '0AİıÖöÇçŞşĞğÜüZ1',
+        '  AİıÖöÇçŞşĞğÜüZ  ',
+        'ÄBC',
+        'Heiß',
+        'ЫыЪъЭэ',
+        '120',
+        'jαckγ',
+      ],
+    });
+  });
+
+  test('should validate Hebrew alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['he'],
+      'valid': [
+        'בדיקה',
+        'שלום',
+      ],
+      'invalid': [
+        'בדיקה123',
+        '  foo  ',
+        'abc1',
+        '',
+      ],
+    });
+  });
+
+  test('should validate Hindi alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['hi-IN'],
+      'valid': [
+        'अतअपनाअपनीअपनेअभीअंदरआदिआपइत्यादिइनइनकाइन्हींइन्हेंइन्होंइसइसकाइसकीइसकेइसमेंइसीइसेउनउनकाउनकीउनकेउनकोउन्हींउन्हेंउन्होंउसउसकेउसीउसेएकएवंएसऐसेऔरकईकरकरताकरतेकरनाकरनेकरेंकहतेकहाकाकाफ़ीकिकितनाकिन्हेंकिन्होंकियाकिरकिसकिसीकिसेकीकुछकुलकेकोकोईकौनकौनसागयाघरजबजहाँजाजितनाजिनजिन्हेंजिन्होंजिसजिसेजीधरजैसाजैसेजोतकतबतरहतिनतिन्हेंतिन्होंतिसतिसेतोथाथीथेदबारादियादुसरादूसरेदोद्वाराननकेनहींनानिहायतनीचेनेपरपहलेपूरापेफिरबनीबहीबहुतबादबालाबिलकुलभीभीतरमगरमानोमेमेंयदियहयहाँयहीयायिहयेरखेंरहारहेऱ्वासालिएलियेलेकिनववग़ैरहवर्गवहवहाँवहींवालेवुहवेवोसकतासकतेसबसेसभीसाथसाबुतसाभसारासेसोसंगहीहुआहुईहुएहैहैंहोहोताहोतीहोतेहोनाहोने',
+        'इन्हें',
+      ],
+      'invalid': [
+        'अत०२३४५६७८९',
+        'अत 12',
+        ' अत ',
+        'abc1',
+        'abc',
+        '',
+      ],
+    });
+  });
+
+  test('should validate persian alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['fa-IR'],
+      'valid': [
+        'تست',
+        'عزیزم',
+        'ح',
+      ],
+      'invalid': [
+        'تست 1',
+        '  عزیزم  ',
+        '',
+      ],
+    });
+  });
+
+  test('should validate Thai alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['th-TH'],
+      'valid': [
+        'สวัสดี',
+        'ยินดีต้อนรับ เทสเคส',
+      ],
+      'invalid': [
+        'สวัสดีHi',
+        '123 ยินดีต้อนรับ',
+        'ยินดีต้อนรับ-๑๒๓',
+      ],
+    });
+  });
+
+  test('should validate Korea alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['ko-KR'],
+      'valid': [
+        'ㄱ',
+        'ㅑ',
+        'ㄱㄴㄷㅏㅕ',
+        '세종대왕',
+        '나랏말싸미듕귁에달아문자와로서르사맛디아니할쎄',
+      ],
+      'invalid': [
+        'abc',
+        '123',
+        '흥선대원군 문호개방',
+        '1592년임진왜란',
+        '대한민국!',
+      ],
+    });
+  });
+
+  test('should validate Sinhala alpha strings', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['si-LK'],
+      'valid': [
+        'චතුර',
+        'කචටදබ',
+        'ඎඏදාෛපසුගො',
+      ],
+      'invalid': [
+        'ஆஐअतක',
+        'කචට 12',
+        ' ඎ ',
+        'abc1',
+        'abc',
+        '',
+      ],
+    });
+  });
+
+  test('should error on invalid locale', () {
+    validatorTest({
+      'validator': 'isAlpha',
+      'args': ['is-NOT'],
+      'error': [
+        'abc',
+        'ABC',
       ],
     });
   });
