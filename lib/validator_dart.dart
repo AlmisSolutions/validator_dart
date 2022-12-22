@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
+import 'package:validator_dart/src/validators/normalize_email.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
 import 'package:validator_dart/src/validators/strip_low.dart';
 import 'package:validator_dart/src/validators/to_boolean.dart';
@@ -34,4 +35,7 @@ class Validator {
   static String blacklist(dynamic str, String chars) => $blacklist(str, chars);
   static dynamic isStrongPassword(dynamic str, {PasswordOptions? options}) =>
       $isStrongPassword(str, options: options);
+  static dynamic normalizeEmail(String email,
+          {EmailNormalizationOptions? options}) =>
+      $normalizeEmail(email, options: options);
 }
