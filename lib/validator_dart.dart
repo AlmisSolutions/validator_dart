@@ -9,6 +9,7 @@ import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
+import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
@@ -48,6 +49,8 @@ class Validator {
       $isEmail(str, options: options);
   static bool isURL(String str, {UrlOptions? options}) =>
       $isURL(str, options: options);
+  static bool isMACAddress(String str, {MACAddressOptions? options}) =>
+      $isMACAddress(str, options: options);
   static bool isIP(String str, {int? version}) => $isIP(str, version: version);
   static bool isFQDN(String str, {FqdnOptions? options}) =>
       $isFQDN(str, options: options);
