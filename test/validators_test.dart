@@ -120,6 +120,8 @@ dynamic callMethod(option, List args) {
     return Validator.isMD5(args.get(0));
   } else if (option == 'isHash') {
     return Validator.isHash(args.get(0), args.get(1));
+  } else if (option == 'isJWT') {
+    return Validator.isJWT(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isBase64') {
@@ -4847,6 +4849,30 @@ void main() {
         '39485729348',
         '%&FHKJFvk',
       ],
+    });
+  });
+
+  test('should validate JWT tokens', () {
+    validatorTest({
+      'validator': 'isJWT',
+      'valid': [
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb3JlbSI6Imlwc3VtIn0.ymiJSsMJXR6tMSr8G9usjQ15_8hKPDv_CArLhxw28MI',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2xvciI6InNpdCIsImFtZXQiOlsibG9yZW0iLCJpcHN1bSJdfQ.rRpe04zbWbbJjwM43VnHzAboDzszJtGrNsUxaqQ-GQ8',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqb2huIjp7ImFnZSI6MjUsImhlaWdodCI6MTg1fSwiamFrZSI6eyJhZ2UiOjMwLCJoZWlnaHQiOjI3MH19.YRLPARDmhGMC3BBk_OhtwwK21PIkVCqQe8ncIRPKo-E',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ', // No signature
+      ],
+      'invalid': [
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+        '\$Zs.ewu.su84',
+        'ks64\$S/9.dy\$§kz.3sd73b',
+      ],
+      // 'error': [
+      //   [],
+      //   {},
+      //   null,
+      //   undefined,
+      // ],
     });
   });
 

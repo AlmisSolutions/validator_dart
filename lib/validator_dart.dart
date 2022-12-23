@@ -22,6 +22,7 @@ import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
+import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
@@ -106,6 +107,7 @@ class Validator {
   static bool isISRC(String str) => $isISRC(str);
   static bool isMD5(String str) => $isMD5(str);
   static bool isHash(String str, String algorithm) => $isHash(str, algorithm);
+  static bool isJWT(String str) => $isJWT(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>
