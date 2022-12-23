@@ -12,6 +12,7 @@ import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_hash.dart';
 import 'package:validator_dart/src/validators/is_hex_color.dart';
 import 'package:validator_dart/src/validators/is_hexadecimal.dart';
 import 'package:validator_dart/src/validators/is_hsl.dart';
@@ -103,6 +104,7 @@ class Validator {
       $isRgbColor(str, includePercentValues: includePercentValues);
   static bool isISRC(String str) => $isISRC(str);
   static bool isMD5(String str) => $isMD5(str);
+  static bool isHash(String str, String algorithm) => $isHash(str, algorithm);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }
