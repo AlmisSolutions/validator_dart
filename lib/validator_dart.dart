@@ -14,6 +14,7 @@ import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
+import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
@@ -77,6 +78,7 @@ class Validator {
       $isInt(str, options: options);
   static bool isDecimal(String str, {DecimalOptions? options}) =>
       $isDecimal(str, options: options);
+  static bool isLowercase(String str) => $isLowercase(str);
   static bool isPassportNumber(String str, String countryCode) =>
       $isPassportNumber(str, countryCode);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>

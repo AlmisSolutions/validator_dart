@@ -12,6 +12,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -32,6 +34,7 @@ void validatorTest(Map<String, dynamic> options) {
       }
     });
   }
+
   if (options['valid'] != null) {
     options['valid'].forEach((valid) {
       args[0] = valid;
@@ -42,6 +45,7 @@ void validatorTest(Map<String, dynamic> options) {
       }
     });
   }
+
   if (options['invalid'] != null) {
     options['invalid'].forEach((invalid) {
       args[0] = invalid;
@@ -79,6 +83,8 @@ dynamic callMethod(option, List args) {
     return Validator.isPort(args.get(0));
   } else if (option == 'isDecimal') {
     return Validator.isDecimal(args.get(0), options: args.get(1));
+  } else if (option == 'isLowercase') {
+    return Validator.isLowercase(args.get(0));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isPassportNumber') {
@@ -4013,6 +4019,22 @@ void main() {
         '123',
         '0.01',
         '0,01',
+      ],
+    });
+  });
+
+  test('should validate lowercase strings', () {
+    validatorTest({
+      'validator': 'isLowercase',
+      'valid': [
+        'abc',
+        'abc123',
+        'this is lowercase.',
+        'tr竪s 端ber',
+      ],
+      'invalid': [
+        'fooBar',
+        '123A',
       ],
     });
   });
