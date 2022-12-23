@@ -19,6 +19,7 @@ import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
+import 'package:validator_dart/src/validators/is_isrc.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
@@ -99,6 +100,7 @@ class Validator {
   static bool isHSL(String str) => $isHSL(str);
   static bool isRgbColor(String str, {bool includePercentValues = true}) =>
       $isRgbColor(str, includePercentValues: includePercentValues);
+  static bool isISRC(String str) => $isISRC(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }

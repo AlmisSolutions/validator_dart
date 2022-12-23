@@ -14,8 +14,6 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
-import 'sanitizers_test.dart';
-
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -112,6 +110,8 @@ dynamic callMethod(option, List args) {
     } else {
       return Validator.isRgbColor(args.get(0));
     }
+  } else if (option == 'isISRC') {
+    return Validator.isISRC(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   }
@@ -4653,6 +4653,24 @@ void main() {
       'invalid': [
         'rgb(4,4,5%)',
         'rgba(5%,5%,5%)',
+      ],
+    });
+  });
+
+  test('should validate ISRC code strings', () {
+    validatorTest({
+      'validator': 'isISRC',
+      'valid': [
+        'USAT29900609',
+        'GBAYE6800011',
+        'USRC15705223',
+        'USCA29500702',
+      ],
+      'invalid': [
+        'USAT2990060',
+        'SRC15705223',
+        'US-CA29500702',
+        'USARC15705223',
       ],
     });
   });
