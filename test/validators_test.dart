@@ -4,6 +4,7 @@ import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
+import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -12,8 +13,6 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
-
-import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -90,6 +89,8 @@ dynamic callMethod(option, List args) {
     return Validator.isIMEI(args.get(0), options: args.get(1));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
+  } else if (option == 'isFloat') {
+    return Validator.isFloat(args.get(0), options: args.get(1));
   } else if (option == 'isPassportNumber') {
     return Validator.isPassportNumber(args.get(0), args.get(1));
   } else if (option == 'isByteLength') {
@@ -4085,6 +4086,22 @@ void main() {
     });
   });
 
+  test('should validate uppercase strings', () {
+    validatorTest({
+      'validator': 'isUppercase',
+      'valid': [
+        'ABC',
+        'ABC123',
+        'ALL CAPS IS FUN.',
+        '   .',
+      ],
+      'invalid': [
+        'fooBar',
+        '123abc',
+      ],
+    });
+  });
+
   test('should validate integers', () {
     validatorTest({
       'validator': 'isInt',
@@ -4220,6 +4237,252 @@ void main() {
     });
   });
 
+  test('should validate floats', () {
+    validatorTest({
+      'validator': 'isFloat',
+      'valid': [
+        '123',
+        '123.',
+        '123.123',
+        '-123.123',
+        '-0.123',
+        '+0.123',
+        '0.123',
+        '.0',
+        '-.123',
+        '+.123',
+        '01.123',
+        '-0.22250738585072011e-307',
+      ],
+      'invalid': [
+        '+',
+        '-',
+        '  ',
+        '',
+        '.',
+        'foo',
+        '20.foo',
+        '2020-01-06T14:31:00.135Z',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          locale: 'en-AU',
+        )
+      ],
+      'valid': [
+        '123',
+        '123.',
+        '123.123',
+        '-123.123',
+        '-0.123',
+        '+0.123',
+        '0.123',
+        '.0',
+        '-.123',
+        '+.123',
+        '01.123',
+        '-0.22250738585072011e-307',
+      ],
+      'invalid': [
+        '123٫123',
+        '123,123',
+        '  ',
+        '',
+        '.',
+        'foo',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          locale: 'de-DE',
+        )
+      ],
+      'valid': [
+        '123',
+        '123,',
+        '123,123',
+        '-123,123',
+        '-0,123',
+        '+0,123',
+        '0,123',
+        ',0',
+        '-,123',
+        '+,123',
+        '01,123',
+        '-0,22250738585072011e-307',
+      ],
+      'invalid': [
+        '123.123',
+        '123٫123',
+        '  ',
+        '',
+        '.',
+        'foo',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [FloatOptions(locale: 'ar-JO')],
+      'valid': [
+        '123',
+        '123٫',
+        '123٫123',
+        '-123٫123',
+        '-0٫123',
+        '+0٫123',
+        '0٫123',
+        '٫0',
+        '-٫123',
+        '+٫123',
+        '01٫123',
+        '-0٫22250738585072011e-307',
+      ],
+      'invalid': [
+        '123,123',
+        '123.123',
+        '  ',
+        '',
+        '.',
+        'foo',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          min: 3.7,
+        )
+      ],
+      'valid': [
+        '3.888',
+        '3.92',
+        '4.5',
+        '50',
+        '3.7',
+        '3.71',
+      ],
+      'invalid': [
+        '3.6',
+        '3.69',
+        '3',
+        '1.5',
+        'a',
+      ],
+    });
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          min: 0.1,
+          max: 1.0,
+        )
+      ],
+      'valid': [
+        '0.1',
+        '1.0',
+        '0.15',
+        '0.33',
+        '0.57',
+        '0.7',
+      ],
+      'invalid': [
+        '0',
+        '0.0',
+        'a',
+        '1.3',
+        '0.05',
+        '5',
+      ],
+    });
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          gt: -5.5,
+          lt: 10,
+        )
+      ],
+      'valid': [
+        '9.9',
+        '1.0',
+        '0',
+        '-1',
+        '7',
+        '-5.4',
+      ],
+      'invalid': [
+        '10',
+        '-5.5',
+        'a',
+        '-20.3',
+        '20e3',
+        '10.00001',
+      ],
+    });
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          min: -5.5,
+          max: 10,
+          gt: -5.5,
+          lt: 10,
+        )
+      ],
+      'valid': [
+        '9.99999',
+        '-5.499999',
+      ],
+      'invalid': [
+        '10',
+        '-5.5',
+      ],
+    });
+    validatorTest({
+      'validator': 'isFloat',
+      'args': [
+        FloatOptions(
+          locale: 'de-DE',
+          min: 3.1,
+        )
+      ],
+      'valid': [
+        '123',
+        '123,',
+        '123,123',
+        '3,1',
+        '3,100001',
+      ],
+      'invalid': [
+        '3,09',
+        '-,123',
+        '+,123',
+        '01,123',
+        '-0,22250738585072011e-307',
+        '-123,123',
+        '-0,123',
+        '+0,123',
+        '0,123',
+        ',0',
+        '123.123',
+        '123٫123',
+        '  ',
+        '',
+        '.',
+        'foo',
+      ],
+    });
+  });
+
   test('should validate strings by byte length (deprecated api)', () {
     validatorTest({
       'validator': 'isByteLength',
@@ -4240,22 +4503,6 @@ void main() {
       'args': [ByteLengthOptions(min: 0, max: 0)],
       'valid': [''],
       'invalid': ['ｇ', 'a'],
-    });
-  });
-
-  test('should validate uppercase strings', () {
-    validatorTest({
-      'validator': 'isUppercase',
-      'valid': [
-        'ABC',
-        'ABC123',
-        'ALL CAPS IS FUN.',
-        '   .',
-      ],
-      'invalid': [
-        'fooBar',
-        '123abc',
-      ],
     });
   });
 }

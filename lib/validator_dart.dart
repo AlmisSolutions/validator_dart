@@ -10,6 +10,7 @@ import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
+import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -75,16 +76,18 @@ class Validator {
   static bool isNumeric(String str, {NumericOptions? options}) =>
       $isNumeric(str, options: options);
   static bool isPort(String str) => $isPort(str);
-  static bool isInt(String str, {IntOptions? options}) =>
-      $isInt(str, options: options);
   static bool isDecimal(String str, {DecimalOptions? options}) =>
       $isDecimal(str, options: options);
   static bool isLowercase(String str) => $isLowercase(str);
   static bool isIMEI(String str, {IMEIOptions? options}) =>
       $isIMEI(str, options: options);
+  static bool isUppercase(dynamic str) => $isUppercase(str);
+  static bool isInt(String str, {IntOptions? options}) =>
+      $isInt(str, options: options);
+  static bool isFloat(String str, {FloatOptions? options}) =>
+      $isFloat(str, options: options);
   static bool isPassportNumber(String str, String countryCode) =>
       $isPassportNumber(str, countryCode);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
-  static bool isUppercase(dynamic str) => $isUppercase(str);
 }
