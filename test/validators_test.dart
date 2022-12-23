@@ -8,6 +8,7 @@ import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
+import 'package:validator_dart/src/validators/is_empty.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
@@ -124,8 +125,10 @@ dynamic callMethod(option, List args) {
     return Validator.isJWT(args.get(0));
   } else if (option == 'isMongoId') {
     return Validator.isMongoId(args.get(0));
-  } else if (option == 'isByteLength') {
-    return Validator.isByteLength(args.get(0), options: args.get(1));
+  } else if (option == 'isMongoId') {
+    return Validator.isMongoId(args.get(0));
+  } else if (option == 'isEmpty') {
+    return Validator.isEmpty(args.get(0), options: args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -4889,6 +4892,54 @@ void main() {
         '507f1f77bcf86cd79943901z',
         '',
         '507f1f77bcf86cd799439011 ',
+      ],
+    });
+  });
+
+  test('should validate null strings', () {
+    validatorTest({
+      'validator': 'isEmpty',
+      'valid': [
+        '',
+      ],
+      'invalid': [
+        ' ',
+        'foo',
+        '3',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isEmpty',
+      'args': [
+        EmptyOptions(
+          ignoreWhitespace: false,
+        )
+      ],
+      'valid': [
+        '',
+      ],
+      'invalid': [
+        ' ',
+        'foo',
+        '3',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isEmpty',
+      'args': [
+        EmptyOptions(
+          ignoreWhitespace: true,
+        )
+      ],
+      'valid': [
+        '',
+        ' ',
+      ],
+      'invalid': [
+        'foo',
+        '3',
       ],
     });
   });

@@ -11,6 +11,7 @@ import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
+import 'package:validator_dart/src/validators/is_empty.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_hash.dart';
@@ -110,6 +111,8 @@ class Validator {
   static bool isHash(String str, String algorithm) => $isHash(str, algorithm);
   static bool isJWT(String str) => $isJWT(str);
   static bool isMongoId(String str) => $isMongoId(str);
+  static bool isEmpty(String str, {EmptyOptions? options}) =>
+      $isEmpty(str, options: options);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>
