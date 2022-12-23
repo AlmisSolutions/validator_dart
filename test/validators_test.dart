@@ -99,6 +99,8 @@ dynamic callMethod(option, List args) {
     return Validator.isHexadecimal(args.get(0));
   } else if (option == 'isOctal') {
     return Validator.isOctal(args.get(0));
+  } else if (option == 'isHexColor') {
+    return Validator.isHexColor(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   }
@@ -4528,6 +4530,25 @@ void main() {
         '00c12345670c',
         '',
         '..',
+      ],
+    });
+  });
+
+  test('should validate hexadecimal color strings', () {
+    validatorTest({
+      'validator': 'isHexColor',
+      'valid': [
+        '#ff0000ff',
+        '#ff0034',
+        '#CCCCCC',
+        '0f38',
+        'fff',
+        '#f00',
+      ],
+      'invalid': [
+        '#ff',
+        'fff0a',
+        '#ff12FG',
       ],
     });
   });
