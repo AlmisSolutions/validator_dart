@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
+import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
@@ -107,4 +108,6 @@ class Validator {
   static bool isHash(String str, String algorithm) => $isHash(str, algorithm);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
+  static bool isBase64(String str, {Base64Options? options}) =>
+      $isBase64(str, options: options);
 }
