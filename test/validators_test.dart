@@ -1,5 +1,6 @@
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
+import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
@@ -65,6 +66,9 @@ dynamic callMethod(option, List args) {
     return Validator.isFQDN(args.get(0), options: args.get(1));
   } else if (option == 'isAlpha') {
     return Validator.isAlpha(args.get(0),
+        locale: args.get(1), options: args.get(2));
+  } else if (option == 'isAlphanumeric') {
+    return Validator.isAlphanumeric(args.get(0),
         locale: args.get(1), options: args.get(2));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
@@ -2215,6 +2219,664 @@ void main() {
       'error': [
         'abc',
         'ABC',
+      ],
+    });
+  });
+
+  test('should validate alphanumeric string with ignored characters', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': [
+        'en-US',
+        AlphanumericOptions(ignore: '@_- ')
+      ], // ignore [@ space _ -]
+      'valid': [
+        'Hello@123',
+        'this is a valid alphaNumeric string',
+        'En-US @ alpha_numeric',
+      ],
+      'invalid': [
+        'In*Valid',
+        'hello\$123',
+        '{invalid}',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': [
+        'en-US',
+        AlphanumericOptions(ignore: RegExp(r'[\s/-]'))
+      ], // ignore [space -]
+      'valid': [
+        'en-US',
+        'this is a valid alphaNumeric string',
+      ],
+      'invalid': [
+        'INVALID\$ AlphaNum Str',
+        'hello@123',
+        'abc*123',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': [
+        'en-US',
+        AlphanumericOptions(ignore: 1234)
+      ], // invalid ignore matcher (ignore should be instance of a String or RegExp)
+      'error': [
+        'alpha',
+      ],
+    });
+  });
+
+  test('should validate defined english aliases', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['en-GB'],
+      'valid': [
+        'abc123',
+        'ABC11',
+      ],
+      'invalid': [
+        'abc ',
+        'foo!!',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+      ],
+    });
+  });
+
+  test('should validate Azerbaijani alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['az-AZ'],
+      'valid': [
+        'Azərbaycan',
+        'Bakı',
+        'abc1',
+        'abcç2',
+        '3kərə4kərə',
+      ],
+      'invalid': [
+        '  foo1  ',
+        '',
+        'ab(cd)',
+        'simvol@',
+        'wəkil',
+      ],
+    });
+  });
+
+  test('should validate bulgarian alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['bg-BG'],
+      'valid': [
+        'абв1',
+        '4АБ5В6',
+        'жаба',
+        'яГоДа2',
+        'йЮя',
+        '123',
+      ],
+      'invalid': [
+        ' ',
+        '789  ',
+        'hello000',
+      ],
+    });
+  });
+
+  test('should validate Bengali alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['bn-BD'],
+      'valid': [
+        'দ্গজ্ঞহ্রত্য১২৩',
+        'দ্গগফ৮৯০',
+        'চব৩৬৫ভবচ',
+        '১২৩৪',
+        '৩৪২৩৪দফজ্ঞদফ',
+      ],
+      'invalid': [
+        ' ',
+        '১২৩  ',
+        'hel৩২0',
+      ],
+    });
+  });
+
+  test('should validate czech alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['cs-CZ'],
+      'valid': [
+        'řiť123',
+        'KŮŇ11',
+      ],
+      'invalid': [
+        'řiď ',
+        'blé!!',
+      ],
+    });
+  });
+
+  test('should validate slovak alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['sk-SK'],
+      'valid': [
+        '1môj',
+        '2ľúbím',
+        '3mäkčeň',
+        '4stĹp',
+        '5vŕba',
+        '6ňorimberk',
+        '7ťava',
+        '8žanéta',
+        '9Ďábelské',
+        '10ódy',
+      ],
+      'invalid': [
+        '1moj!',
+        '你好世界',
+        '  Привет мир  ',
+      ],
+    });
+  });
+
+  test('should validate danish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['da-DK'],
+      'valid': [
+        'ÆØÅ123',
+        'Ære321',
+        '321Øre',
+        '123Åre',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        '',
+      ],
+    });
+  });
+
+  test('should validate dutch alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['nl-NL'],
+      'valid': [
+        'Kán123',
+        'één354',
+        'v4óór',
+        'nú234',
+        'hé54él',
+      ],
+      'invalid': [
+        '1äca ',
+        'ab3cß',
+        'Øre',
+      ],
+    });
+  });
+
+  test('should validate finnish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['fi-FI'],
+      'valid': [
+        'äiti124',
+        'ÖLJY1234',
+        '123Åke',
+        '451åå23',
+      ],
+      'invalid': [
+        'AİıÖöÇçŞşĞğÜüZ',
+        'foo!!',
+        '',
+      ],
+    });
+  });
+
+  test('should validate german alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['de-DE'],
+      'valid': [
+        'äbc123',
+        'ÄBC11',
+      ],
+      'invalid': [
+        'äca ',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate hungarian alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['hu-HU'],
+      'valid': [
+        '0árvíztűrőtükörfúrógép123',
+        '0ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉP123',
+      ],
+      'invalid': [
+        '1időúr!',
+        'äbc1',
+        '  fäö  ',
+        'Heiß!',
+        '',
+      ],
+    });
+  });
+
+  test('should validate portuguese alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['pt-PT'],
+      'valid': [
+        'palíndromo',
+        '2órgão',
+        'qwértyúão9',
+        'àäãcë4üïÄÏÜ',
+      ],
+      'invalid': [
+        '!abc',
+        'Heiß',
+        'Øre',
+        'æøå',
+        '',
+      ],
+    });
+  });
+
+  test('should validate italian alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['it-IT'],
+      'valid': [
+        '123àéèìîóòù',
+        '123correnti',
+        'DEFINIZIONE321',
+        'compil123azione',
+        'met23ró',
+        'pès56ca',
+        'PÉS45CA',
+        'gen45î',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        'æøå',
+        '',
+      ],
+    });
+  });
+
+  test('should validate spanish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['es-ES'],
+      'valid': [
+        'ábcó123',
+        'ÁBCÓ11',
+      ],
+      'invalid': [
+        'äca ',
+        'abcß',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate Vietnamese alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['vi-VN'],
+      'valid': [
+        'Thầy3',
+        '3Gà',
+      ],
+      'invalid': [
+        'toang!',
+        'Cậu Vàng',
+      ],
+    });
+  });
+
+  test('should validate arabic alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['ar'],
+      'valid': [
+        'أبت123',
+        'أبتَُِ١٢٣',
+      ],
+      'invalid': [
+        'äca ',
+        'abcß',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate Hindi alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['hi-IN'],
+      'valid': [
+        'अतअपनाअपनीअपनेअभीअंदरआदिआपइत्यादिइनइनकाइन्हींइन्हेंइन्होंइसइसकाइसकीइसकेइसमेंइसीइसेउनउनकाउनकीउनकेउनकोउन्हींउन्हेंउन्होंउसउसकेउसीउसेएकएवंएसऐसेऔरकईकरकरताकरतेकरनाकरनेकरेंकहतेकहाकाकाफ़ीकिकितनाकिन्हेंकिन्होंकियाकिरकिसकिसीकिसेकीकुछकुलकेकोकोईकौनकौनसागयाघरजबजहाँजाजितनाजिनजिन्हेंजिन्होंजिसजिसेजीधरजैसाजैसेजोतकतबतरहतिनतिन्हेंतिन्होंतिसतिसेतोथाथीथेदबारादियादुसरादूसरेदोद्वाराननकेनहींनानिहायतनीचेनेपरपहलेपूरापेफिरबनीबहीबहुतबादबालाबिलकुलभीभीतरमगरमानोमेमेंयदियहयहाँयहीयायिहयेरखेंरहारहेऱ्वासालिएलियेलेकिनववग़ैरहवर्गवहवहाँवहींवालेवुहवेवोसकतासकतेसबसेसभीसाथसाबुतसाभसारासेसोसंगहीहुआहुईहुएहैहैंहोहोताहोतीहोतेहोनाहोने०२३४५६७८९',
+        'इन्हें४५६७८९',
+      ],
+      'invalid': [
+        'अत ०२३४५६७८९',
+        ' ३४५६७८९',
+        '12 ',
+        ' अत ',
+        'abc1',
+        'abc',
+        '',
+      ],
+    });
+  });
+
+  test('should validate farsi alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['fa-IR'],
+      'valid': [
+        'پارسی۱۲۳',
+        '۱۴۵۶',
+        'مژگان9',
+      ],
+      'invalid': [
+        'äca ',
+        'abcßة',
+        'föö!!',
+        '٤٥٦',
+      ],
+    });
+  });
+
+  test('should validate Japanese alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['ja-JP'],
+      'valid': [
+        'あいうえお123',
+        '123がぎぐげご',
+        'ぁぃぅぇぉ',
+        'アイウエオ',
+        'ァィゥェ',
+        'ｱｲｳｴｵ',
+        '２０世紀少年',
+        '華氏４５１度',
+      ],
+      'invalid': [
+        ' あいう123 ',
+        'abcあいう',
+        '生きろ!!',
+      ],
+    });
+  });
+
+  test('should validate kurdish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['ku-IQ'],
+      'valid': [
+        'ئؤڤگێ١٢٣',
+      ],
+      'invalid': [
+        'äca ',
+        'abcß',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate defined arabic aliases', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['ar-SY'],
+      'valid': [
+        'أبت123',
+        'أبتَُِ١٢٣',
+      ],
+      'invalid': [
+        'abc ',
+        'foo!!',
+        'ÄBC',
+        'FÜübar',
+        'Jön',
+      ],
+    });
+  });
+
+  test('should validate norwegian alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['nb-NO'],
+      'valid': [
+        'ÆØÅ123',
+        'Ære321',
+        '321Øre',
+        '123Åre',
+      ],
+      'invalid': [
+        'äbc123',
+        'ÄBC11',
+        '',
+      ],
+    });
+  });
+
+  test('should validate polish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['pl-PL'],
+      'valid': [
+        'kre123ską',
+        'zam21knięte',
+        'zw23ykłe',
+        '123',
+        'prz23yjęły',
+        'świ23ęty',
+        'Poz1322wól',
+      ],
+      'invalid': [
+        '12řiď ',
+        'blé!!',
+        'föö!2!',
+      ],
+    });
+  });
+
+  test('should validate serbian cyrillic alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['sr-RS'],
+      'valid': [
+        'ШћжЂљЕ123',
+        'ЧПСТ132ЋЏ',
+      ],
+      'invalid': [
+        'řiď ',
+        'blé!!',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate serbian latin alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['sr-RS@latin'],
+      'valid': [
+        'ŠAabčšđćž123',
+        'ŠATRO11Ćčđš',
+      ],
+      'invalid': [
+        'řiď ',
+        'blé!!',
+        'föö!!',
+      ],
+    });
+  });
+
+  test('should validate swedish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['sv-SE'],
+      'valid': [
+        'religiös13',
+        'st23jäla',
+        'västgöte123',
+        '123Åre',
+      ],
+      'invalid': [
+        'AİıÖöÇçŞşĞğÜüZ',
+        'foo!!',
+        '',
+      ],
+    });
+  });
+
+  test('should validate turkish alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['tr-TR'],
+      'valid': [
+        'AİıÖöÇçŞşĞğÜüZ123',
+      ],
+      'invalid': [
+        'AİıÖöÇçŞşĞğÜüZ ',
+        'foo!!',
+        'ÄBC',
+      ],
+    });
+  });
+
+  test('should validate urkrainian alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['uk-UA'],
+      'valid': [
+        'АБВГҐДЕЄЖЗИIЇЙКЛМНОПРСТУФХЦШЩЬЮЯ123',
+      ],
+      'invalid': [
+        'éeoc ',
+        'foo!!',
+        'ÄBC',
+        'ЫыЪъЭэ',
+      ],
+    });
+  });
+
+  test('should validate greek alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['el-GR'],
+      'valid': [
+        'αβγδεζηθικλμνξοπρςστυφχψω',
+        'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ',
+        '20θ',
+        '1234568960',
+      ],
+      'invalid': [
+        '0AİıÖöÇçŞşĞğÜüZ1',
+        '  AİıÖöÇçŞşĞğÜüZ  ',
+        'ÄBC',
+        'Heiß',
+        'ЫыЪъЭэ',
+        'jαckγ',
+      ],
+    });
+  });
+
+  test('should validate Hebrew alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['he'],
+      'valid': [
+        'אבג123',
+        'שלום11',
+      ],
+      'invalid': [
+        'אבג ',
+        'לא!!',
+        'abc',
+        '  foo  ',
+      ],
+    });
+  });
+
+  test('should validate Thai alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['th-TH'],
+      'valid': [
+        'สวัสดี ๑๒๓',
+        'ยินดีต้อนรับทั้ง ๒ คน',
+      ],
+      'invalid': [
+        '1.สวัสดี',
+        'ยินดีต้อนรับทั้ง 2 คน',
+      ],
+    });
+  });
+
+  test('should validate Korea alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['ko-KR'],
+      'valid': [
+        '2002',
+        '훈민정음',
+        '1446년훈민정음반포',
+      ],
+      'invalid': [
+        '2022!',
+        '2019 코로나시작',
+        '1.로렘입숨',
+      ],
+    });
+  });
+
+  test('should validate Sinhala alphanumeric strings', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['si-LK'],
+      'valid': [
+        'චතුර',
+        'කචට12',
+        'ඎඏදාෛපසුගො2',
+        '1234',
+      ],
+      'invalid': [
+        'ஆஐअतක',
+        'කචට 12',
+        ' ඎ ',
+        'a1234',
+        'abc',
+        '',
+      ],
+    });
+  });
+
+  test('should error on invalid locale', () {
+    validatorTest({
+      'validator': 'isAlphanumeric',
+      'args': ['is-NOT'],
+      'error': [
+        '1234568960',
+        'abc123',
       ],
     });
   });

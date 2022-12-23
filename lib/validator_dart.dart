@@ -6,6 +6,7 @@ library validator_dart;
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
+import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
@@ -61,6 +62,9 @@ class Validator {
   static bool isAlpha(String str,
           {String? locale = 'en-US', AlphaOptions? options}) =>
       $isAlpha(str, locale: locale ?? 'en-US', options: options);
+  static bool isAlphanumeric(String str,
+          {String? locale = 'en-US', AlphanumericOptions? options}) =>
+      $isAlphanumeric(str, locale: locale ?? 'en-US', options: options);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isUppercase(dynamic str) => $isUppercase(str);

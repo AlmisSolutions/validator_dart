@@ -1,17 +1,18 @@
 import 'package:validator_dart/src/validators/alpha.dart';
 
-class AlphaOptions {
+class AlphanumericOptions {
   final dynamic ignore;
 
-  AlphaOptions({
+  AlphanumericOptions({
     this.ignore,
   });
 }
 
-final alpha = Alpha().alpha;
+final alphanumeric = Alpha().alphanumeric;
 
-bool $isAlpha(String str, {String locale = 'en-US', AlphaOptions? options}) {
-  options ??= AlphaOptions();
+bool $isAlphanumeric(String str,
+    {String? locale = 'en-US', AlphanumericOptions? options}) {
+  options ??= AlphanumericOptions();
   final ignore = options.ignore;
 
   if (ignore != null) {
@@ -27,8 +28,8 @@ bool $isAlpha(String str, {String locale = 'en-US', AlphaOptions? options}) {
     }
   }
 
-  if (alpha.containsKey(locale)) {
-    return alpha[locale]?.hasMatch(str) ?? false;
+  if (alphanumeric.containsKey(locale)) {
+    return alphanumeric[locale].hasMatch(str);
   }
-  throw Exception('Invalid locale "$locale"');
+  throw Exception("Invalid locale '$locale'");
 }

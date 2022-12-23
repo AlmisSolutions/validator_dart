@@ -44,7 +44,7 @@ final _alpha = {
   'si-LK': RegExp(r'^[\u0D80-\u0DFF]+$'),
 };
 
-Map<String, RegExp> alphanumeric = {
+Map<String, RegExp> _alphanumeric = {
   'en-US': RegExp(r'^[0-9A-Z]+$', caseSensitive: false),
   'az-AZ': RegExp(r'^[0-9A-VXYZÇƏĞİıÖŞÜ]+$', caseSensitive: false),
   'bg-BG': RegExp(r'^[0-9А-Я]+$', caseSensitive: false),
@@ -154,56 +154,59 @@ final commaDecimal = [
   'vi-VN',
 ];
 
-Map<String, dynamic> $alpha() {
-  for (var i = 0; i < englishLocales.length; i++) {
-    final locale = 'en-${englishLocales[i]}';
-    _alpha[locale] = _alpha['en-US']!;
-    alphanumeric[locale] = alphanumeric['en-US']!;
-    decimal[locale] = decimal['en-US']!;
+class Alpha {
+  Map<String, dynamic> get alpha => _alpha;
+  Map<String, dynamic> get alphanumeric => _alphanumeric;
+
+  Alpha() {
+    for (var i = 0; i < englishLocales.length; i++) {
+      final locale = 'en-${englishLocales[i]}';
+      _alpha[locale] = _alpha['en-US']!;
+      _alphanumeric[locale] = _alphanumeric['en-US']!;
+      decimal[locale] = decimal['en-US']!;
+    }
+
+    for (var i = 0; i < arabicLocales.length; i++) {
+      final locale = 'ar-${arabicLocales[i]}';
+      _alpha[locale] = _alpha['ar']!;
+      _alphanumeric[locale] = _alphanumeric['ar']!;
+      decimal[locale] = decimal['ar']!;
+    }
+
+    for (var i = 0; i < bengaliLocales.length; i++) {
+      final locale = 'bn-${bengaliLocales[i]}';
+      _alpha[locale] = _alpha['bn']!;
+      _alphanumeric[locale] = _alphanumeric['bn']!;
+      decimal[locale] = decimal['en-US']!;
+    }
+
+    for (var i = 0; i < farsiLocales.length; i++) {
+      final locale = 'fa-${farsiLocales[i]}';
+      _alphanumeric[locale] = _alphanumeric['fa']!;
+      decimal[locale] = decimal['ar']!;
+    }
+
+    for (var i = 0; i < dotDecimal.length; i++) {
+      decimal[dotDecimal[i]] = decimal['en-US']!;
+    }
+
+    for (var i = 0; i < commaDecimal.length; i++) {
+      decimal[commaDecimal[i]] = ',';
+    }
+
+    _alpha['fr-CA'] = _alpha['fr-FR']!;
+    _alphanumeric['fr-CA'] = _alphanumeric['fr-FR']!;
+
+    _alpha['pt-BR'] = _alpha['pt-PT']!;
+    _alphanumeric['pt-BR'] = _alphanumeric['pt-PT']!;
+    decimal['pt-BR'] = decimal['pt-PT']!;
+
+    // see #862
+    _alpha['pl-Pl'] = _alpha['pl-PL']!;
+    _alphanumeric['pl-Pl'] = _alphanumeric['pl-PL']!;
+    decimal['pl-Pl'] = decimal['pl-PL']!;
+
+    // see #1455
+    _alpha['fa-AF'] = _alpha['fa']!;
   }
-
-  for (var i = 0; i < arabicLocales.length; i++) {
-    final locale = 'ar-${arabicLocales[i]}';
-    _alpha[locale] = _alpha['ar']!;
-    alphanumeric[locale] = alphanumeric['ar']!;
-    decimal[locale] = decimal['ar']!;
-  }
-
-  for (var i = 0; i < bengaliLocales.length; i++) {
-    final locale = 'bn-${bengaliLocales[i]}';
-    _alpha[locale] = _alpha['bn']!;
-    alphanumeric[locale] = alphanumeric['bn']!;
-    decimal[locale] = decimal['en-US']!;
-  }
-
-  for (var i = 0; i < farsiLocales.length; i++) {
-    final locale = 'fa-${farsiLocales[i]}';
-    alphanumeric[locale] = alphanumeric['fa']!;
-    decimal[locale] = decimal['ar']!;
-  }
-
-  for (var i = 0; i < dotDecimal.length; i++) {
-    decimal[dotDecimal[i]] = decimal['en-US']!;
-  }
-
-  for (var i = 0; i < commaDecimal.length; i++) {
-    decimal[commaDecimal[i]] = ',';
-  }
-
-  _alpha['fr-CA'] = _alpha['fr-FR']!;
-  alphanumeric['fr-CA'] = alphanumeric['fr-FR']!;
-
-  _alpha['pt-BR'] = _alpha['pt-PT']!;
-  alphanumeric['pt-BR'] = alphanumeric['pt-PT']!;
-  decimal['pt-BR'] = decimal['pt-PT']!;
-
-  // see #862
-  _alpha['pl-Pl'] = _alpha['pl-PL']!;
-  alphanumeric['pl-Pl'] = alphanumeric['pl-PL']!;
-  decimal['pl-Pl'] = decimal['pl-PL']!;
-
-  // see #1455
-  _alpha['fa-AF'] = _alpha['fa']!;
-
-  return _alpha;
 }
