@@ -76,6 +76,8 @@ dynamic callMethod(option, List args) {
         locale: args.get(1), options: args.get(2));
   } else if (option == 'isNumeric') {
     return Validator.isNumeric(args.get(0), options: args.get(1));
+  } else if (option == 'isPort') {
+    return Validator.isPort(args.get(0));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isByteLength') {
@@ -2984,6 +2986,26 @@ void main() {
         ' ',
         '',
         '.',
+      ],
+    });
+  });
+
+  test('should validate ports', () {
+    validatorTest({
+      'validator': 'isPort',
+      'valid': [
+        '0',
+        '22',
+        '80',
+        '443',
+        '3000',
+        '8080',
+        '65535',
+      ],
+      'invalid': [
+        '',
+        '-1',
+        '65536',
       ],
     });
   });
