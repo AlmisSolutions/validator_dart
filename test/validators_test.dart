@@ -14,6 +14,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -103,6 +105,13 @@ dynamic callMethod(option, List args) {
     return Validator.isHexColor(args.get(0));
   } else if (option == 'isHSL') {
     return Validator.isHSL(args.get(0));
+  } else if (option == 'isRgbColor') {
+    if (args.get(1) != null) {
+      return Validator.isRgbColor(args.get(0),
+          includePercentValues: args.get(1));
+    } else {
+      return Validator.isRgbColor(args.get(0));
+    }
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   }
@@ -4599,6 +4608,51 @@ void main() {
         'hsl( deg, 60%, 70%)',
         'hsl(, 60%, 70%)',
         'hsl(3000deg, 70%)',
+      ],
+    });
+  });
+
+  test('should validate rgb color strings', () {
+    validatorTest({
+      'validator': 'isRgbColor',
+      'valid': [
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgba(0,0,0,0)',
+        'rgba(255,255,255,1)',
+        'rgba(255,255,255,.1)',
+        'rgba(255,255,255,0.1)',
+        'rgb(5%,5%,5%)',
+        'rgba(5%,5%,5%,.3)',
+      ],
+      'invalid': [
+        'rgb(0,0,0,)',
+        'rgb(0,0,)',
+        'rgb(0,0,256)',
+        'rgb()',
+        'rgba(0,0,0)',
+        'rgba(255,255,255,2)',
+        'rgba(255,255,255,.12)',
+        'rgba(255,255,256,0.1)',
+        'rgb(4,4,5%)',
+        'rgba(5%,5%,5%)',
+        'rgba(3,3,3%,.3)',
+        'rgb(101%,101%,101%)',
+        'rgba(3%,3%,101%,0.3)',
+      ],
+    });
+
+    // test where includePercentValues is given as false
+    validatorTest({
+      'validator': 'isRgbColor',
+      'args': [false],
+      'valid': [
+        'rgb(5,5,5)',
+        'rgba(5,5,5,.3)',
+      ],
+      'invalid': [
+        'rgb(4,4,5%)',
+        'rgba(5%,5%,5%)',
       ],
     });
   });

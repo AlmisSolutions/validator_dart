@@ -25,6 +25,7 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
+import 'package:validator_dart/src/validators/is_rgb_color.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
@@ -96,6 +97,8 @@ class Validator {
   static bool isOctal(String str) => $isOctal(str);
   static bool isHexColor(String str) => $isHexColor(str);
   static bool isHSL(String str) => $isHSL(str);
+  static bool isRgbColor(String str, {bool includePercentValues = true}) =>
+      $isRgbColor(str, includePercentValues: includePercentValues);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }
