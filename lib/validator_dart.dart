@@ -15,6 +15,7 @@ import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
+import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
@@ -73,6 +74,8 @@ class Validator {
   static bool isPort(String str) => $isPort(str);
   static bool isInt(String str, {IntOptions? options}) =>
       $isInt(str, options: options);
+  static bool isPassportNumber(String str, String countryCode) =>
+      $isPassportNumber(str, countryCode);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isUppercase(dynamic str) => $isUppercase(str);
