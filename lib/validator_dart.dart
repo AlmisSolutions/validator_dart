@@ -11,6 +11,7 @@ import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
@@ -79,6 +80,8 @@ class Validator {
   static bool isDecimal(String str, {DecimalOptions? options}) =>
       $isDecimal(str, options: options);
   static bool isLowercase(String str) => $isLowercase(str);
+  static bool isIMEI(String str, {IMEIOptions? options}) =>
+      $isIMEI(str, options: options);
   static bool isPassportNumber(String str, String countryCode) =>
       $isPassportNumber(str, countryCode);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>

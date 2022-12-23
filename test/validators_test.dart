@@ -5,6 +5,7 @@ import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
@@ -85,6 +86,8 @@ dynamic callMethod(option, List args) {
     return Validator.isDecimal(args.get(0), options: args.get(1));
   } else if (option == 'isLowercase') {
     return Validator.isLowercase(args.get(0));
+  } else if (option == 'isIMEI') {
+    return Validator.isIMEI(args.get(0), options: args.get(1));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isPassportNumber') {
@@ -4035,6 +4038,49 @@ void main() {
       'invalid': [
         'fooBar',
         '123A',
+      ],
+    });
+  });
+
+  test('should validate imei strings', () {
+    validatorTest({
+      'validator': 'isIMEI',
+      'valid': [
+        '352099001761481',
+        '868932036356090',
+        '490154203237518',
+        '546918475942169',
+        '998227667144730',
+        '532729766805999',
+      ],
+      'invalid': [
+        '490154203237517',
+        '3568680000414120',
+        '3520990017614823',
+      ],
+    });
+  });
+
+  test('should validate imei strings with hyphens', () {
+    validatorTest({
+      'validator': 'isIMEI',
+      'args': [
+        IMEIOptions(
+          allowHyphens: true,
+        )
+      ],
+      'valid': [
+        '35-209900-176148-1',
+        '86-893203-635609-0',
+        '49-015420-323751-8',
+        '54-691847-594216-9',
+        '99-822766-714473-0',
+        '53-272976-680599-9',
+      ],
+      'invalid': [
+        '49-015420-323751-7',
+        '35-686800-0041412-0',
+        '35-209900-1761482-3',
       ],
     });
   });
