@@ -1,5 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
 class ByteLengthOptions {
   final int min;
   final int? max;
@@ -11,8 +9,6 @@ class ByteLengthOptions {
 }
 
 bool $isByteLength(String str, {ByteLengthOptions? options}) {
-  assertString(str);
-
   options ??= ByteLengthOptions();
 
   final encoded = Uri.encodeComponent(str);

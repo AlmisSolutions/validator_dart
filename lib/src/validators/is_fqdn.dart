@@ -1,5 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
 class FqdnOptions {
   bool requireTld;
   bool allowUnderscores;
@@ -16,8 +14,7 @@ class FqdnOptions {
   });
 }
 
-bool $isFQDN(dynamic str, {FqdnOptions? options}) {
-  assertString(str);
+bool $isFQDN(String str, {FqdnOptions? options}) {
   options ??= FqdnOptions();
 
   /* Remove the optional trailing dot before checking validity */

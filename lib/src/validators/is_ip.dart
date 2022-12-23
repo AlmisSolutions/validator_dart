@@ -1,5 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
 /*
 11.3.  Examples
    The following addresses
@@ -32,7 +30,6 @@ final iPv6AddressRegExp = RegExp(
     '^((?:$iPv6SegmentFormat:){7}(?:$iPv6SegmentFormat|:)|(?:$iPv6SegmentFormat:){6}(?:$iPv4AddressFormat|:$iPv6SegmentFormat|:)|(?:$iPv6SegmentFormat:){5}(?::$iPv4AddressFormat|(:$iPv6SegmentFormat){1,2}|:)|(?:$iPv6SegmentFormat:){4}(?:(:$iPv6SegmentFormat){0,1}:$iPv4AddressFormat|(:$iPv6SegmentFormat){1,3}|:)|(?:$iPv6SegmentFormat:){3}(?:(:$iPv6SegmentFormat){0,2}:$iPv4AddressFormat|(:$iPv6SegmentFormat){1,4}|:)|(?:$iPv6SegmentFormat:){2}(?:(:$iPv6SegmentFormat){0,3}:$iPv4AddressFormat|(:$iPv6SegmentFormat){1,5}|:)|(?:$iPv6SegmentFormat:){1}(?:(:$iPv6SegmentFormat){0,4}:$iPv4AddressFormat|(:$iPv6SegmentFormat){1,6}|:)|(?::((?::$iPv6SegmentFormat){0,5}:$iPv4AddressFormat|(?::$iPv6SegmentFormat){1,7}|:)))(%[0-9a-zA-Z-.:]{1,})?\$');
 
 bool $isIP(String str, {int? version}) {
-  assertString(str);
   if (version == null) {
     return $isIP(str, version: 4) || $isIP(str, version: 6);
   }

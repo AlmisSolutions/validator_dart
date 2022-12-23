@@ -1,8 +1,4 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
-String $ltrim(dynamic str, String? chars) {
-  assertString(str);
-
+String $ltrim(String str, String? chars) {
   RegExp pattern;
   if (chars != null) {
     pattern = RegExp(

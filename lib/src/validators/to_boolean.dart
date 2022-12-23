@@ -1,7 +1,4 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
-bool $toBoolean(dynamic str, bool? strict) {
-  assertString(str);
+bool $toBoolean(String str, bool? strict) {
   if (strict ?? false) {
     return str == '1' || RegExp(r'^true$', caseSensitive: false).hasMatch(str);
   }

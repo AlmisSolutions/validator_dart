@@ -1,7 +1,4 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
-String $escape(dynamic str) {
-  assertString(str);
+String $escape(String str) {
   return (str
       .replaceAll('&', '&amp;')
       .replaceAll('"', '&quot;')

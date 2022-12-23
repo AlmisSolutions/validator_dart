@@ -1,7 +1,4 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
 String $unescape(String str) {
-  assertString(str);
   return (str
       .replaceAll('&quot;', '"')
       .replaceAll('&#x27;', "'")

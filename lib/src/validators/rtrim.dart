@@ -1,7 +1,4 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
-String $rtrim(dynamic str, String? chars) {
-  assertString(str);
+String $rtrim(String str, String? chars) {
   if (chars != null) {
     final pattern = RegExp(
         '[${chars.replaceAllMapped(RegExp(r'[.*+?^${}()|[\]\\]'), (match) => '\\${match.group(0)}')}]+\$');

@@ -1,6 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
-bool $isUppercase(dynamic str) {
-  assertString(str);
+bool $isUppercase(String str) {
   return str == str.toUpperCase();
 }

@@ -1,5 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
-
 final upperCaseRegex = RegExp(r'^[A-Z]$');
 final lowerCaseRegex = RegExp(r'^[a-z]$');
 final numberRegex = RegExp(r'^[0-9]$');
@@ -98,8 +96,7 @@ double scorePassword(Analysis analysis, PasswordOptions scoringOptions) {
   return points;
 }
 
-dynamic $isStrongPassword(dynamic str, {PasswordOptions? options}) {
-  assertString(str);
+dynamic $isStrongPassword(String str, {PasswordOptions? options}) {
   var analysis = analyzePassword(str);
   options = options ?? PasswordOptions();
   if (options.returnScore) {

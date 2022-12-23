@@ -1,4 +1,3 @@
-import 'package:validator_dart/src/util/assert_string.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
@@ -80,7 +79,6 @@ bool validateDisplayName(String displayName) {
 }
 
 bool $isEmail(String str, {EmailOptions? options}) {
-  assertString(str);
   options ??= EmailOptions();
 
   if (options.requireDisplayName || options.allowDisplayName) {
