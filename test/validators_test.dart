@@ -97,6 +97,8 @@ dynamic callMethod(option, List args) {
     return Validator.isFloat(args.get(0), options: args.get(1));
   } else if (option == 'isHexadecimal') {
     return Validator.isHexadecimal(args.get(0));
+  } else if (option == 'isOctal') {
+    return Validator.isOctal(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   }
@@ -4508,6 +4510,24 @@ void main() {
         '0x0123456789abcDEFq',
         '0hfedCBA9876543210q',
         '01234q56789abcDEF',
+      ],
+    });
+  });
+
+  test('should validate octal strings', () {
+    validatorTest({
+      'validator': 'isOctal',
+      'valid': [
+        '076543210',
+        '0o01234567',
+      ],
+      'invalid': [
+        'abcdefg',
+        '012345678',
+        '012345670c',
+        '00c12345670c',
+        '',
+        '..',
       ],
     });
   });

@@ -20,6 +20,7 @@ import 'package:validator_dart/src/validators/is_ip_range.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
+import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
@@ -90,6 +91,7 @@ class Validator {
   static bool isFloat(String str, {FloatOptions? options}) =>
       $isFloat(str, options: options);
   static bool isHexadecimal(String str) => $isHexadecimal(str);
+  static bool isOctal(String str) => $isOctal(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }
