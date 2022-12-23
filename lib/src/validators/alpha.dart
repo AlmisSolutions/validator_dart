@@ -91,7 +91,7 @@ Map<String, RegExp> _alphanumeric = {
   'si-LK': RegExp(r'^[0-9\u0D80-\u0DFF]+$'),
 };
 
-Map<String, String> decimal = {
+Map<String, String> _decimal = {
   'en-US': '.',
   'ar': '٫',
 };
@@ -157,41 +157,42 @@ final commaDecimal = [
 class Alpha {
   Map<String, dynamic> get alpha => _alpha;
   Map<String, dynamic> get alphanumeric => _alphanumeric;
+  Map<String, dynamic> get decimal => _decimal;
 
   Alpha() {
     for (var i = 0; i < englishLocales.length; i++) {
       final locale = 'en-${englishLocales[i]}';
       _alpha[locale] = _alpha['en-US']!;
       _alphanumeric[locale] = _alphanumeric['en-US']!;
-      decimal[locale] = decimal['en-US']!;
+      _decimal[locale] = _decimal['en-US']!;
     }
 
     for (var i = 0; i < arabicLocales.length; i++) {
       final locale = 'ar-${arabicLocales[i]}';
       _alpha[locale] = _alpha['ar']!;
       _alphanumeric[locale] = _alphanumeric['ar']!;
-      decimal[locale] = decimal['ar']!;
+      _decimal[locale] = _decimal['ar']!;
     }
 
     for (var i = 0; i < bengaliLocales.length; i++) {
       final locale = 'bn-${bengaliLocales[i]}';
       _alpha[locale] = _alpha['bn']!;
       _alphanumeric[locale] = _alphanumeric['bn']!;
-      decimal[locale] = decimal['en-US']!;
+      _decimal[locale] = _decimal['en-US']!;
     }
 
     for (var i = 0; i < farsiLocales.length; i++) {
       final locale = 'fa-${farsiLocales[i]}';
       _alphanumeric[locale] = _alphanumeric['fa']!;
-      decimal[locale] = decimal['ar']!;
+      _decimal[locale] = _decimal['ar']!;
     }
 
     for (var i = 0; i < dotDecimal.length; i++) {
-      decimal[dotDecimal[i]] = decimal['en-US']!;
+      _decimal[dotDecimal[i]] = _decimal['en-US']!;
     }
 
     for (var i = 0; i < commaDecimal.length; i++) {
-      decimal[commaDecimal[i]] = ',';
+      _decimal[commaDecimal[i]] = ',';
     }
 
     _alpha['fr-CA'] = _alpha['fr-FR']!;
@@ -201,12 +202,10 @@ class Alpha {
     _alphanumeric['pt-BR'] = _alphanumeric['pt-PT']!;
     decimal['pt-BR'] = decimal['pt-PT']!;
 
-    // see #862
     _alpha['pl-Pl'] = _alpha['pl-PL']!;
     _alphanumeric['pl-Pl'] = _alphanumeric['pl-PL']!;
     decimal['pl-Pl'] = decimal['pl-PL']!;
 
-    // see #1455
     _alpha['fa-AF'] = _alpha['fa']!;
   }
 }

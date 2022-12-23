@@ -5,9 +5,12 @@ import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
+import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
+
+import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -70,6 +73,8 @@ dynamic callMethod(option, List args) {
   } else if (option == 'isAlphanumeric') {
     return Validator.isAlphanumeric(args.get(0),
         locale: args.get(1), options: args.get(2));
+  } else if (option == 'isNumeric') {
+    return Validator.isNumeric(args.get(0), options: args.get(1));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isUppercase') {
@@ -2877,6 +2882,105 @@ void main() {
       'error': [
         '1234568960',
         'abc123',
+      ],
+    });
+  });
+
+  test('should validate numeric strings', () {
+    validatorTest({
+      'validator': 'isNumeric',
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '123.123',
+        '+000000',
+      ],
+      'invalid': [
+        ' ',
+        '',
+        '.',
+      ],
+    });
+  });
+
+  test('should validate numeric strings without symbols', () {
+    validatorTest({
+      'validator': 'isNumeric',
+      'args': [
+        NumericOptions(
+          noSymbols: true,
+        )
+      ],
+      'valid': [
+        '123',
+        '00123',
+        '0',
+      ],
+      'invalid': [
+        '-0',
+        '+000000',
+        '',
+        '+123',
+        '123.123',
+        '-00123',
+        ' ',
+        '.',
+      ],
+    });
+  });
+
+  test('should validate numeric strings with locale', () {
+    validatorTest({
+      'validator': 'isNumeric',
+      'args': [
+        NumericOptions(
+          locale: 'fr-FR',
+        )
+      ],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '123,123',
+        '+000000',
+      ],
+      'invalid': [
+        ' ',
+        '',
+        ',',
+      ],
+    });
+  });
+
+  test('should validate numeric strings with locale', () {
+    validatorTest({
+      'validator': 'isNumeric',
+      'args': [
+        NumericOptions(
+          locale: 'fr-CA',
+        )
+      ],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '123,123',
+        '+000000',
+      ],
+      'invalid': [
+        ' ',
+        '',
+        '.',
       ],
     });
   });
