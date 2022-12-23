@@ -10,6 +10,7 @@ import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
@@ -68,6 +69,8 @@ class Validator {
       $isAlphanumeric(str, locale: locale ?? 'en-US', options: options);
   static bool isNumeric(String str, {NumericOptions? options}) =>
       $isNumeric(str, options: options);
+  static bool isInt(String str, {IntOptions? options}) =>
+      $isInt(str, options: options);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isUppercase(dynamic str) => $isUppercase(str);

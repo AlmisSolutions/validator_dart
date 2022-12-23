@@ -4,6 +4,7 @@ import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
@@ -75,6 +76,8 @@ dynamic callMethod(option, List args) {
         locale: args.get(1), options: args.get(2));
   } else if (option == 'isNumeric') {
     return Validator.isNumeric(args.get(0), options: args.get(1));
+  } else if (option == 'isInt') {
+    return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isUppercase') {
@@ -2981,6 +2984,141 @@ void main() {
         ' ',
         '',
         '.',
+      ],
+    });
+  });
+
+  test('should validate integers', () {
+    validatorTest({
+      'validator': 'isInt',
+      'valid': [
+        '13',
+        '123',
+        '0',
+        '123',
+        '-0',
+        '+1',
+        '01',
+        '-01',
+        '000',
+      ],
+      'invalid': [
+        '100e10',
+        '123.123',
+        '   ',
+        '',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isInt',
+      'args': [IntOptions(allowLeadingZeroes: false)],
+      'valid': [
+        '13',
+        '123',
+        '0',
+        '123',
+        '-0',
+        '+1',
+      ],
+      'invalid': [
+        '01',
+        '-01',
+        '000',
+        '100e10',
+        '123.123',
+        '   ',
+        '',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isInt',
+      'args': [IntOptions(allowLeadingZeroes: true)],
+      'valid': [
+        '13',
+        '123',
+        '0',
+        '123',
+        '-0',
+        '+1',
+        '01',
+        '-01',
+        '000',
+        '-000',
+        '+000',
+      ],
+      'invalid': [
+        '100e10',
+        '123.123',
+        '   ',
+        '',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isInt',
+      'args': [
+        IntOptions(
+          min: 10,
+        )
+      ],
+      'valid': [
+        '15',
+        '80',
+        '99',
+      ],
+      'invalid': [
+        '9',
+        '6',
+        '3.2',
+        'a',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isInt',
+      'args': [
+        IntOptions(
+          min: 10,
+          max: 15,
+        )
+      ],
+      'valid': [
+        '15',
+        '11',
+        '13',
+      ],
+      'invalid': [
+        '9',
+        '2',
+        '17',
+        '3.2',
+        '33',
+        'a',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isInt',
+      'args': [
+        IntOptions(
+          gt: 10,
+          lt: 15,
+        )
+      ],
+      'valid': [
+        '14',
+        '11',
+        '13',
+      ],
+      'invalid': [
+        '10',
+        '15',
+        '17',
+        '3.2',
+        '33',
+        'a',
       ],
     });
   });
