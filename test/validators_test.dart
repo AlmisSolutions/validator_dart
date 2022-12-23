@@ -2,6 +2,7 @@ import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
+import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -76,6 +77,8 @@ dynamic callMethod(option, List args) {
     return Validator.isNumeric(args.get(0), options: args.get(1));
   } else if (option == 'isPort') {
     return Validator.isPort(args.get(0));
+  } else if (option == 'isDecimal') {
+    return Validator.isDecimal(args.get(0), options: args.get(1));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isPassportNumber') {
@@ -3701,6 +3704,315 @@ void main() {
         'US0123456',
         '0123456US',
         '7903699371',
+      ],
+    });
+  });
+
+  test('should validate decimal numbers', () {
+    validatorTest({
+      'validator': 'isDecimal',
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '-0',
+        '0.0000000000001',
+      ],
+      'invalid': [
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '0,0000000000001',
+        '0٫01',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '0٫0000000000001',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'en-AU')],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '-0',
+        '0.0000000000001',
+      ],
+      'invalid': [
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '0,0000000000001',
+        '0٫01',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '0٫0000000000001',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'bg-BG')],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '-0',
+        '0,0000000000001',
+      ],
+      'invalid': [
+        '0.0000000000001',
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '0٫01',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '0٫0000000000001',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'cs-CZ')],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '-0',
+        '0,0000000000001',
+      ],
+      'invalid': [
+        '0.0000000000001',
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '0٫01',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '0٫0000000000001',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'ar-JO')],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0٫01',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '-0',
+        '0٫0000000000001',
+      ],
+      'invalid': [
+        '0,0000000000001',
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '0.0000000000001',
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'ar-EG')],
+      'valid': [
+        '0.01',
+      ],
+      'invalid': [
+        '0,01',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'en-ZM')],
+      'valid': [
+        '0,01',
+      ],
+      'invalid': [
+        '0.01',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(forceDecimals: true)],
+      'valid': [
+        '0.01',
+        '.1',
+        '1.0',
+        '-.25',
+        '0.0000000000001',
+      ],
+      'invalid': [
+        '-0',
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0,0000000000001',
+        '0,01',
+        ',1',
+        '1,0',
+        '-,25',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(decimalDigits: '2,3')],
+      'valid': [
+        '123',
+        '00123',
+        '-00123',
+        '0',
+        '-0',
+        '+123',
+        '0.01',
+        '1.043',
+        '.15',
+        '-.255',
+        '-0',
+      ],
+      'invalid': [
+        '0.0000000000001',
+        '0.0',
+        '.1',
+        '1.0',
+        '-.2564',
+        '0.0',
+        '٫1',
+        '1٫0',
+        '-٫25',
+        '0٫0000000000001',
+        '....',
+        ' ',
+        '',
+        '-',
+        '+',
+        '.',
+        '0.1a',
+        'a',
+        '\n',
+      ],
+    });
+  });
+
+  test('should error on invalid locale', () {
+    validatorTest({
+      'validator': 'isDecimal',
+      'args': [DecimalOptions(locale: 'is-NOT')],
+      'error': [
+        '123',
+        '0.01',
+        '0,01',
       ],
     });
   });

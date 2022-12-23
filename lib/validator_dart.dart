@@ -8,6 +8,7 @@ import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
+import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -74,6 +75,8 @@ class Validator {
   static bool isPort(String str) => $isPort(str);
   static bool isInt(String str, {IntOptions? options}) =>
       $isInt(str, options: options);
+  static bool isDecimal(String str, {DecimalOptions? options}) =>
+      $isDecimal(str, options: options);
   static bool isPassportNumber(String str, String countryCode) =>
       $isPassportNumber(str, countryCode);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
