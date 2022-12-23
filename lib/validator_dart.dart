@@ -26,6 +26,7 @@ import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
+import 'package:validator_dart/src/validators/is_mongo_id.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
@@ -108,6 +109,7 @@ class Validator {
   static bool isMD5(String str) => $isMD5(str);
   static bool isHash(String str, String algorithm) => $isHash(str, algorithm);
   static bool isJWT(String str) => $isJWT(str);
+  static bool isMongoId(String str) => $isMongoId(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>

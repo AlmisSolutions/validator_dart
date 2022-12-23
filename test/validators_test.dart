@@ -122,6 +122,8 @@ dynamic callMethod(option, List args) {
     return Validator.isHash(args.get(0), args.get(1));
   } else if (option == 'isJWT') {
     return Validator.isJWT(args.get(0));
+  } else if (option == 'isMongoId') {
+    return Validator.isMongoId(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isBase64') {
@@ -4873,6 +4875,21 @@ void main() {
       //   null,
       //   undefined,
       // ],
+    });
+  });
+
+  test('should validate hex-encoded MongoDB ObjectId', () {
+    validatorTest({
+      'validator': 'isMongoId',
+      'valid': [
+        '507f1f77bcf86cd799439011',
+      ],
+      'invalid': [
+        '507f1f77bcf86cd7994390',
+        '507f1f77bcf86cd79943901z',
+        '',
+        '507f1f77bcf86cd799439011 ',
+      ],
     });
   });
 
