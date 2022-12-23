@@ -14,6 +14,7 @@ import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_hex_color.dart';
 import 'package:validator_dart/src/validators/is_hexadecimal.dart';
+import 'package:validator_dart/src/validators/is_hsl.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
@@ -94,6 +95,7 @@ class Validator {
   static bool isHexadecimal(String str) => $isHexadecimal(str);
   static bool isOctal(String str) => $isOctal(str);
   static bool isHexColor(String str) => $isHexColor(str);
+  static bool isHSL(String str) => $isHSL(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }
