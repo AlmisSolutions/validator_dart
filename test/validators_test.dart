@@ -83,20 +83,22 @@ dynamic callMethod(option, List args) {
     return Validator.isPort(args.get(0));
   } else if (option == 'isDecimal') {
     return Validator.isDecimal(args.get(0), options: args.get(1));
+  } else if (option == 'isPassportNumber') {
+    return Validator.isPassportNumber(args.get(0), args.get(1));
   } else if (option == 'isLowercase') {
     return Validator.isLowercase(args.get(0));
   } else if (option == 'isIMEI') {
     return Validator.isIMEI(args.get(0), options: args.get(1));
+  } else if (option == 'isUppercase') {
+    return Validator.isUppercase(args.get(0));
   } else if (option == 'isInt') {
     return Validator.isInt(args.get(0), options: args.get(1));
   } else if (option == 'isFloat') {
     return Validator.isFloat(args.get(0), options: args.get(1));
-  } else if (option == 'isPassportNumber') {
-    return Validator.isPassportNumber(args.get(0), args.get(1));
+  } else if (option == 'isHexadecimal') {
+    return Validator.isHexadecimal(args.get(0));
   } else if (option == 'isByteLength') {
     return Validator.isByteLength(args.get(0), options: args.get(1));
-  } else if (option == 'isUppercase') {
-    return Validator.isUppercase(args.get(0));
   }
 
   return null;
@@ -4479,6 +4481,33 @@ void main() {
         '',
         '.',
         'foo',
+      ],
+    });
+  });
+
+  test('should validate hexadecimal strings', () {
+    validatorTest({
+      'validator': 'isHexadecimal',
+      'valid': [
+        'deadBEEF',
+        'ff0044',
+        '0xff0044',
+        '0XfF0044',
+        '0x0123456789abcDEF',
+        '0X0123456789abcDEF',
+        '0hfedCBA9876543210',
+        '0HfedCBA9876543210',
+        '0123456789abcDEF',
+      ],
+      'invalid': [
+        'abcdefg',
+        '',
+        '..',
+        '0xa2h',
+        '0xa20x',
+        '0x0123456789abcDEFq',
+        '0hfedCBA9876543210q',
+        '01234q56789abcDEF',
       ],
     });
   });

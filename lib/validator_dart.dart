@@ -12,6 +12,7 @@ import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_hexadecimal.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
@@ -76,6 +77,8 @@ class Validator {
   static bool isNumeric(String str, {NumericOptions? options}) =>
       $isNumeric(str, options: options);
   static bool isPort(String str) => $isPort(str);
+  static bool isPassportNumber(String str, String countryCode) =>
+      $isPassportNumber(str, countryCode);
   static bool isDecimal(String str, {DecimalOptions? options}) =>
       $isDecimal(str, options: options);
   static bool isLowercase(String str) => $isLowercase(str);
@@ -86,8 +89,7 @@ class Validator {
       $isInt(str, options: options);
   static bool isFloat(String str, {FloatOptions? options}) =>
       $isFloat(str, options: options);
-  static bool isPassportNumber(String str, String countryCode) =>
-      $isPassportNumber(str, countryCode);
+  static bool isHexadecimal(String str) => $isHexadecimal(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
 }
