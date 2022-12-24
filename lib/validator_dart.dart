@@ -4,6 +4,7 @@
 library validator_dart;
 
 import 'package:validator_dart/src/validators/blacklist.dart';
+import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/equals.dart';
 import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
@@ -115,6 +116,8 @@ class Validator {
   static bool isEmpty(String str, {EmptyOptions? options}) =>
       $isEmpty(str, options: options);
   static bool equals(String str, String comparison) => $equals(str, comparison);
+  static bool contains(String str, String elem, {ContainsOptions? options}) =>
+      $contains(str, elem, options: options);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>

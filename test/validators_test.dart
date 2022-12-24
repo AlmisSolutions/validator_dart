@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_base64.dart';
@@ -133,6 +134,8 @@ dynamic callMethod(option, List args) {
     return Validator.isEmpty(args.get(0), options: args.get(1));
   } else if (option == 'equals') {
     return Validator.equals(args.get(0), args.get(1));
+  } else if (option == 'contains') {
+    return Validator.contains(args.get(0), args.get(1), options: args.get(2));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -4954,6 +4957,39 @@ void main() {
       'args': ['abc'],
       'valid': ['abc'],
       'invalid': ['Abc', '123'],
+    });
+  });
+
+  test('should validate strings contain another string', () {
+    validatorTest({
+      'validator': 'contains',
+      'args': ['foo'],
+      'valid': ['foo', 'foobar', 'bazfoo'],
+      'invalid': ['bar', 'fobar'],
+    });
+
+    validatorTest({
+      'validator': 'contains',
+      'args': [
+        'foo',
+        ContainsOptions(
+          ignoreCase: true,
+        )
+      ],
+      'valid': ['Foo', 'FOObar', 'BAZfoo'],
+      'invalid': ['bar', 'fobar', 'baxoof'],
+    });
+
+    validatorTest({
+      'validator': 'contains',
+      'args': [
+        'foo',
+        ContainsOptions(
+          minOccurrences: 2,
+        )
+      ],
+      'valid': ['foofoofoo', '12foo124foo', 'fofooofoooofoooo', 'foo1foo'],
+      'invalid': ['foo', 'foobar', 'Fooofoo', 'foofo'],
     });
   });
 
