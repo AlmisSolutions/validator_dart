@@ -19,6 +19,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -129,6 +131,8 @@ dynamic callMethod(option, List args) {
     return Validator.isMongoId(args.get(0));
   } else if (option == 'isEmpty') {
     return Validator.isEmpty(args.get(0), options: args.get(1));
+  } else if (option == 'equals') {
+    return Validator.equals(args.get(0), args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -4941,6 +4945,15 @@ void main() {
         'foo',
         '3',
       ],
+    });
+  });
+
+  test('should validate strings against an expected value', () {
+    validatorTest({
+      'validator': 'equals',
+      'args': ['abc'],
+      'valid': ['abc'],
+      'invalid': ['Abc', '123'],
     });
   });
 
