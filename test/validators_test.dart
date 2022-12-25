@@ -141,6 +141,8 @@ dynamic callMethod(option, List args) {
     return Validator.isLength(args.get(0), options: args.get(1));
   } else if (option == 'isLocale') {
     return Validator.isLocale(args.get(0));
+  } else if (option == 'isByteLength') {
+    return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
