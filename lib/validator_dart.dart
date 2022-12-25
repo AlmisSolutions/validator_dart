@@ -40,6 +40,7 @@ import 'package:validator_dart/src/validators/is_rgb_color.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
+import 'package:validator_dart/src/validators/is_uuid.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/matches.dart';
 import 'package:validator_dart/src/validators/normalize_email.dart';
@@ -127,6 +128,9 @@ class Validator {
   static bool isLocale(String str) => $isLocale(str);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
+  static bool isUUID(String str, {int? version}) =>
+      $isUUID(str, version: version);
+
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
 }
