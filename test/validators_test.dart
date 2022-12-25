@@ -5021,7 +5021,7 @@ void main() {
     });
   });
 
-  test('should validate strings by length (deprecated api)', () {
+  test('should validate strings by length', () {
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5032,19 +5032,12 @@ void main() {
       'valid': ['abc', 'de', 'abcd'],
       'invalid': ['', 'a'],
     });
-
     validatorTest({
       'validator': 'isLength',
-      'args': [
-        LengthOptions(
-          min: 2,
-          max: 3,
-        )
-      ],
+      'args': [LengthOptions(min: 2, max: 3)],
       'valid': ['abc', 'de'],
       'invalid': ['', 'a', 'abcd'],
     });
-
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5056,17 +5049,38 @@ void main() {
       'valid': ['干𩸽', '𠮷野家'],
       'invalid': ['', '𠀋', '千竈通り'],
     });
-
     validatorTest({
       'validator': 'isLength',
       'args': [
         LengthOptions(
-          min: 0,
+          max: 3,
+        )
+      ],
+      'valid': ['abc', 'de', 'a', ''],
+      'invalid': ['abcd'],
+    });
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
           max: 0,
         )
       ],
       'valid': [''],
       'invalid': ['a', 'ab'],
+    });
+    validatorTest({
+      'validator': 'isLength',
+      'valid': ['a', '', 'asds'],
+    });
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
+          max: 8,
+        )
+      ],
+      'valid': ['👩🦰👩👩👦👦🏳️🌈', '⏩︎⏩︎⏪︎⏪︎⏭︎⏭︎⏮︎⏮︎'],
     });
   });
 
