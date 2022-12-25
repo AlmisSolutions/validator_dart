@@ -136,6 +136,8 @@ dynamic callMethod(option, List args) {
     return Validator.equals(args.get(0), args.get(1));
   } else if (option == 'contains') {
     return Validator.contains(args.get(0), args.get(1), options: args.get(2));
+  } else if (option == 'matches') {
+    return Validator.matches(args.get(0), args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -4990,6 +4992,27 @@ void main() {
       ],
       'valid': ['foofoofoo', '12foo124foo', 'fofooofoooofoooo', 'foo1foo'],
       'invalid': ['foo', 'foobar', 'Fooofoo', 'foofo'],
+    });
+  });
+
+  test('should validate strings against a pattern', () {
+    validatorTest({
+      'validator': 'matches',
+      'args': [RegExp('abc')],
+      'valid': ['abc', 'abcdef', '123abc'],
+      'invalid': ['acb', 'Abc'],
+    });
+    // validatorTest({
+    //   'validator': 'matches',
+    //   'args': ['abc'],
+    //   'valid': ['abc', 'abcdef', '123abc'],
+    //   'invalid': ['acb', 'Abc'],
+    // });
+    validatorTest({
+      'validator': 'matches',
+      'args': [RegExp('abc', caseSensitive: false)],
+      'valid': ['abc', 'abcdef', '123abc', 'AbC'],
+      'invalid': ['acb'],
     });
   });
 

@@ -39,6 +39,7 @@ import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
+import 'package:validator_dart/src/validators/matches.dart';
 import 'package:validator_dart/src/validators/normalize_email.dart';
 import 'package:validator_dart/src/validators/rtrim.dart';
 import 'package:validator_dart/src/validators/strip_low.dart';
@@ -118,6 +119,7 @@ class Validator {
   static bool equals(String str, String comparison) => $equals(str, comparison);
   static bool contains(String str, String elem, {ContainsOptions? options}) =>
       $contains(str, elem, options: options);
+  static bool matches(String str, RegExp pattern) => $matches(str, pattern);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>
