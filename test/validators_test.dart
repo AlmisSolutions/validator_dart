@@ -14,6 +14,7 @@ import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
+import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
@@ -138,6 +139,8 @@ dynamic callMethod(option, List args) {
     return Validator.contains(args.get(0), args.get(1), options: args.get(2));
   } else if (option == 'matches') {
     return Validator.matches(args.get(0), args.get(1));
+  } else if (option == 'isLength') {
+    return Validator.isLength(args.get(0), options: args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -5013,6 +5016,55 @@ void main() {
       'args': [RegExp('abc', caseSensitive: false)],
       'valid': ['abc', 'abcdef', '123abc', 'AbC'],
       'invalid': ['acb'],
+    });
+  });
+
+  test('should validate strings by length (deprecated api)', () {
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
+          min: 2,
+        )
+      ],
+      'valid': ['abc', 'de', 'abcd'],
+      'invalid': ['', 'a'],
+    });
+
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
+          min: 2,
+          max: 3,
+        )
+      ],
+      'valid': ['abc', 'de'],
+      'invalid': ['', 'a', 'abcd'],
+    });
+
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
+          min: 2,
+          max: 3,
+        )
+      ],
+      'valid': ['干𩸽', '𠮷野家'],
+      'invalid': ['', '𠀋', '千竈通り'],
+    });
+
+    validatorTest({
+      'validator': 'isLength',
+      'args': [
+        LengthOptions(
+          min: 0,
+          max: 0,
+        )
+      ],
+      'valid': [''],
+      'invalid': ['a', 'ab'],
     });
   });
 

@@ -26,6 +26,7 @@ import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
 import 'package:validator_dart/src/validators/is_jwt.dart';
+import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
@@ -120,6 +121,8 @@ class Validator {
   static bool contains(String str, String elem, {ContainsOptions? options}) =>
       $contains(str, elem, options: options);
   static bool matches(String str, RegExp pattern) => $matches(str, pattern);
+  static bool isLength(String str, {LengthOptions? options}) =>
+      $isLength(str, options: options);
   static bool isByteLength(String str, {ByteLengthOptions? options}) =>
       $isByteLength(str, options: options);
   static bool isBase64(String str, {Base64Options? options}) =>
