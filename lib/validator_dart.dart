@@ -14,6 +14,7 @@ import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_before.dart';
 import 'package:validator_dart/src/validators/is_bic.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
+import 'package:validator_dart/src/validators/is_credit_card.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_divisible_by.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
@@ -146,6 +147,8 @@ class Validator {
   static bool isDivisibleBy(String str, dynamic num) =>
       $isDivisibleBy(str, num);
   static bool isLuhnValid(String str) => $isLuhnValid(str);
+  static bool isCreditCard(String str, {CreditCardOptions? options}) =>
+      $isCreditCard(str, options: options);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
