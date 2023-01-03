@@ -1,6 +1,9 @@
-import 'package:validator_dart/validator_dart.dart';
-
 void main() {
-  // var awesome = Awesome();
-  // print('awesome: ${awesome.isAwesome}');
+  String ignore = '@_-+';
+  String escaped = ignore.replaceAllMapped(
+    RegExp(r'[\[\]{}()*+?.,\\^$|#\s]'),
+    (match) => '\\${match.group(0)}',
+  );
+
+  print(escaped);
 }

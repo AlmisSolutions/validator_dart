@@ -147,6 +147,8 @@ dynamic callMethod(option, List args) {
     return Validator.isByteLength(args.get(0), options: args.get(1));
   } else if (option == 'isUUID') {
     return Validator.isUUID(args.get(0), version: args.get(1));
+  } else if (option == 'isIn') {
+    return Validator.isIn(args.get(0), args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -5290,6 +5292,69 @@ void main() {
         '987FBC97-4BED-4078-AF07-9141BA07C9F3',
         '987FBC97-4BED-5078-AF07-9141BA07C9F3',
       ],
+    });
+  });
+
+  test('should validate a string that is in another string or array', () {
+    validatorTest({
+      'validator': 'isIn',
+      'args': ['foobar'],
+      'valid': ['foo', 'bar', 'foobar', ''],
+      'invalid': ['foobarbaz', 'barfoo'],
+    });
+    validatorTest({
+      'validator': 'isIn',
+      'args': [
+        ['foo', 'bar']
+      ],
+      'valid': ['foo', 'bar'],
+      'invalid': ['foobar', 'barfoo', ''],
+    });
+    validatorTest({
+      'validator': 'isIn',
+      'args': [
+        ['1', '2', '3']
+      ],
+      'valid': ['1', '2', '3'],
+      'invalid': ['4', ''],
+    });
+    validatorTest({
+      'validator': 'isIn',
+      'args': [
+        [
+          '1',
+          '2',
+          '3',
+          {'foo': 'bar'},
+          () => 5,
+          {'toString': 'test'}
+        ]
+      ],
+      'valid': ['1', '2', '3', ''],
+      'invalid': ['4'],
+    });
+    validatorTest({
+      'validator': 'isIn',
+      'invalid': ['foo', '']
+    });
+  });
+
+  test('should validate a string that is in another object', () {
+    validatorTest({
+      'validator': 'isIn',
+      'args': [
+        {'foo': 1, 'bar': 2, 'foobar': 3}
+      ],
+      'valid': ['foo', 'bar', 'foobar'],
+      'invalid': ['foobarbaz', 'barfoo', ''],
+    });
+    validatorTest({
+      'validator': 'isIn',
+      'args': [
+        {'1': 3, '2': 0, '3': 1}
+      ],
+      'valid': ['1', '2', '3'],
+      'invalid': ['4', ''],
     });
   });
 
