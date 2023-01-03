@@ -4,6 +4,7 @@
 library validator_dart;
 
 import 'package:validator_dart/src/validators/is_currency.dart';
+import 'package:validator_dart/src/validators/is_ethereum_address.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
@@ -192,5 +193,6 @@ class Validator {
       $isMobilePhone(str, locale, options: options);
   static bool isCurrency(String str, {CurrencyOptions? options}) =>
       $isCurrency(str, options: options);
+  static bool isEthereumAddress(String str) => $isEthereumAddress(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }
