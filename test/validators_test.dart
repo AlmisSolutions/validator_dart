@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/is_issn.dart';
 import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
@@ -170,6 +171,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISBN(args.get(0), args.get(1));
   } else if (option == 'isEAN') {
     return Validator.isEAN(args.get(0));
+  } else if (option == 'isISSN') {
+    return Validator.isISSN(args.get(0), options: args.get(1));
   } else if (option == 'isMultibyte') {
     return Validator.isMultibyte(args.get(0));
   } else if (option == 'isAscii') {
@@ -6366,6 +6369,85 @@ void main() {
         '5901234123451',
         '079777681629',
         '0705632085948',
+      ],
+    });
+  });
+
+  test('should validate ISSNs', () {
+    validatorTest({
+      'validator': 'isISSN',
+      'valid': [
+        '0378-5955',
+        '0000-0000',
+        '2434-561X',
+        '2434-561x',
+        '01896016',
+        '20905076',
+      ],
+      'invalid': [
+        '0378-5954',
+        '0000-0001',
+        '0378-123',
+        '037-1234',
+        '0',
+        '2434-561c',
+        '1684-5370',
+        '19960791',
+        '',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isISSN',
+      'args': [
+        ISSNOptions(caseSensitive: true),
+      ],
+      'valid': [
+        '2434-561X',
+        '2434561X',
+        '0378-5955',
+        '03785955',
+      ],
+      'invalid': [
+        '2434-561x',
+        '2434561x',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isISSN',
+      'args': [
+        ISSNOptions(requireHyphen: true),
+      ],
+      'valid': [
+        '2434-561X',
+        '2434-561x',
+        '0378-5955',
+      ],
+      'invalid': [
+        '2434561X',
+        '2434561x',
+        '03785955',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isISSN',
+      'args': [
+        ISSNOptions(
+          caseSensitive: true,
+          requireHyphen: true,
+        ),
+      ],
+      'valid': [
+        '2434-561X',
+        '0378-5955',
+      ],
+      'invalid': [
+        '2434-561x',
+        '2434561X',
+        '2434561x',
+        '03785955',
       ],
     });
   });

@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
+import 'package:validator_dart/src/is_issn.dart';
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/equals.dart';
@@ -165,6 +166,8 @@ class Validator {
   static bool isISIN(String str) => $isISIN(str);
   static bool isISBN(String str, dynamic version) => $isISBN(str, version);
   static bool isEAN(String str) => $isEAN(str);
+  static bool isISSN(String str, {ISSNOptions? options}) =>
+      $isISSN(str, options: options);
   static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isAscii(String str) => $isAscii(str);
   static bool isFullWidth(String str) => $isFullWidth(str);
