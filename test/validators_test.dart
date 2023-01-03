@@ -174,6 +174,8 @@ dynamic callMethod(option, List args) {
     return Validator.isAscii(args.get(0));
   } else if (option == 'isFullWidth') {
     return Validator.isFullWidth(args.get(0));
+  } else if (option == 'isHalfWidth') {
+    return Validator.isHalfWidth(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6306,6 +6308,22 @@ void main() {
         'abc',
         'abc123',
         '!"#\$%&()<>/+=-_? ~^|.,@`{}[]',
+      ],
+    });
+  });
+
+  test('should validate half-width strings', () {
+    validatorTest({
+      'validator': 'isHalfWidth',
+      'valid': [
+        '!"#\$%&()<>/+=-_? ~^|.,@`{}[]',
+        'l-btn_02--active',
+        'abc123い',
+        'ｶﾀｶﾅﾞﾬ￩',
+      ],
+      'invalid': [
+        'あいうえお',
+        '００１１',
       ],
     });
   });
