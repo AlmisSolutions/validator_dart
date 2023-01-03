@@ -149,6 +149,8 @@ dynamic callMethod(option, List args) {
     return Validator.isUUID(args.get(0), version: args.get(1));
   } else if (option == 'isIn') {
     return Validator.isIn(args.get(0), args.get(1));
+  } else if (option == 'isAfter') {
+    return Validator.isAfter(args.get(0), args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -5355,6 +5357,37 @@ void main() {
       ],
       'valid': ['1', '2', '3'],
       'invalid': ['4', ''],
+    });
+  });
+
+  test('should validate dates against a start date', () {
+    validatorTest({
+      'validator': 'isAfter',
+      'args': ['2011-08-03'],
+      'valid': ['2011-08-04', DateTime(2011, 8, 10).toString()],
+      'invalid': ['2010-07-02', '2011-08-03', DateTime(0).toString(), 'foo'],
+    });
+    validatorTest({
+      'validator': 'isAfter',
+      'valid': [
+        '2100-08-04',
+        DateTime.fromMicrosecondsSinceEpoch(DateTime.now()
+                .add(Duration(microseconds: 86400000))
+                .microsecondsSinceEpoch)
+            .toString()
+      ],
+      'invalid': ['2010-07-02', DateTime(0).toString()],
+    });
+    validatorTest({
+      'validator': 'isAfter',
+      'args': ['2011-08-03'],
+      'valid': ['2015-09-17'],
+      'invalid': ['invalid date'],
+    });
+    validatorTest({
+      'validator': 'isAfter',
+      'args': ['invalid date'],
+      'invalid': ['invalid date', '2015-09-17'],
     });
   });
 

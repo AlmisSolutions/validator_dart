@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/equals.dart';
 import 'package:validator_dart/src/validators/escape.dart';
+import 'package:validator_dart/src/validators/is_after.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_base64.dart';
@@ -132,6 +133,7 @@ class Validator {
   static bool isUUID(String str, {int? version}) =>
       $isUUID(str, version: version);
   static bool isIn(String str, dynamic options) => $isIn(str, options);
+  static bool isAfter(String str, String? date) => $isAfter(str, date);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
 }
