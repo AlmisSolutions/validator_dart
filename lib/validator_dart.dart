@@ -10,6 +10,7 @@ import 'package:validator_dart/src/validators/escape.dart';
 import 'package:validator_dart/src/validators/is_after.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
+import 'package:validator_dart/src/validators/is_ascii.dart';
 import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_before.dart';
 import 'package:validator_dart/src/validators/is_bic.dart';
@@ -156,6 +157,7 @@ class Validator {
       $isIdentityCard(str, locale);
   static bool isISIN(String str) => $isISIN(str);
   static bool isMultibyte(String str) => $isMultibyte(str);
+  static bool isAscii(String str) => $isAscii(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);

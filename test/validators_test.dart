@@ -170,6 +170,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISIN(args.get(0));
   } else if (option == 'isMultibyte') {
     return Validator.isMultibyte(args.get(0));
+  } else if (option == 'isAscii') {
+    return Validator.isAscii(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6267,6 +6269,24 @@ void main() {
         'abc',
         'abc123',
         '<>@" *.',
+      ],
+    });
+  });
+
+  test('should validate ascii strings', () {
+    validatorTest({
+      'validator': 'isAscii',
+      'valid': [
+        'foobar',
+        '0987654321',
+        'test@example.com',
+        '1234abcDEF',
+      ],
+      'invalid': [
+        'ｆｏｏbar',
+        'ｘｙｚ０９８',
+        '１２３456',
+        'ｶﾀｶﾅ',
       ],
     });
   });
