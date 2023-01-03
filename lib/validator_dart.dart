@@ -26,6 +26,7 @@ import 'package:validator_dart/src/validators/is_hex_color.dart';
 import 'package:validator_dart/src/validators/is_hexadecimal.dart';
 import 'package:validator_dart/src/validators/is_hsl.dart';
 import 'package:validator_dart/src/validators/is_iban.dart';
+import 'package:validator_dart/src/validators/is_identity_card.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_in.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -149,6 +150,9 @@ class Validator {
   static bool isLuhnValid(String str) => $isLuhnValid(str);
   static bool isCreditCard(String str, {CreditCardOptions? options}) =>
       $isCreditCard(str, options: options);
+  static bool isIdentityCard(String str, String locale) =>
+      $isIdentityCard(str, locale);
+
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
