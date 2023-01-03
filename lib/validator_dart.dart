@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
+import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
@@ -189,5 +190,7 @@ class Validator {
   static bool isMobilePhone(String str, dynamic locale,
           {MobilePhoneOptions? options}) =>
       $isMobilePhone(str, locale, options: options);
+  static bool isCurrency(String str, {CurrencyOptions? options}) =>
+      $isCurrency(str, options: options);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }
