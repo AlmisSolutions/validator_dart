@@ -151,6 +151,8 @@ dynamic callMethod(option, List args) {
     return Validator.isIn(args.get(0), args.get(1));
   } else if (option == 'isAfter') {
     return Validator.isAfter(args.get(0), args.get(1));
+  } else if (option == 'isBefore') {
+    return Validator.isBefore(args.get(0), args.get(1));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -5015,12 +5017,14 @@ void main() {
       'valid': ['abc', 'abcdef', '123abc'],
       'invalid': ['acb', 'Abc'],
     });
+
     // validatorTest({
     //   'validator': 'matches',
     //   'args': ['abc'],
     //   'valid': ['abc', 'abcdef', '123abc'],
     //   'invalid': ['acb', 'Abc'],
     // });
+
     validatorTest({
       'validator': 'matches',
       'args': [RegExp('abc', caseSensitive: false)],
@@ -5040,12 +5044,14 @@ void main() {
       'valid': ['abc', 'de', 'abcd'],
       'invalid': ['', 'a'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'args': [LengthOptions(min: 2, max: 3)],
       'valid': ['abc', 'de'],
       'invalid': ['', 'a', 'abcd'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5057,6 +5063,7 @@ void main() {
       'valid': ['干𩸽', '𠮷野家'],
       'invalid': ['', '𠀋', '千竈通り'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5067,6 +5074,7 @@ void main() {
       'valid': ['abc', 'de', 'a', ''],
       'invalid': ['abcd'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5077,10 +5085,12 @@ void main() {
       'valid': [''],
       'invalid': ['a', 'ab'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'valid': ['a', '', 'asds'],
     });
+
     validatorTest({
       'validator': 'isLength',
       'args': [
@@ -5124,6 +5134,7 @@ void main() {
       'valid': ['abc', 'de', 'abcd', 'ｇｍａｉｌ'],
       'invalid': ['', 'a'],
     });
+
     validatorTest({
       'validator': 'isByteLength',
       'args': [
@@ -5135,6 +5146,7 @@ void main() {
       'valid': ['abc', 'de', 'ｇ'],
       'invalid': ['', 'a', 'abcd', 'ｇｍ'],
     });
+
     validatorTest({
       'validator': 'isByteLength',
       'args': [
@@ -5145,6 +5157,7 @@ void main() {
       'valid': ['abc', 'de', 'ｇ', 'a', ''],
       'invalid': ['abcd', 'ｇｍ'],
     });
+
     validatorTest({
       'validator': 'isByteLength',
       'args': [
@@ -5175,6 +5188,7 @@ void main() {
         'AAAAAAAA-1111-1111-AAAG-111111111111',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [null],
@@ -5189,6 +5203,7 @@ void main() {
         'A11AAAAA-1111-1111-AAAG-111111111111',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [null],
@@ -5203,6 +5218,7 @@ void main() {
         'A12AAAAA-1111-1111-AAAG-111111111111',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [1],
@@ -5217,6 +5233,7 @@ void main() {
         'A987FBC9-4BED-5078-AF07-9141BA07C9F3',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [2],
@@ -5232,6 +5249,7 @@ void main() {
         'A987FBC9-4BED-5078-AF07-9141BA07C9F3',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [3],
@@ -5247,6 +5265,7 @@ void main() {
         'A987FBC9-4BED-5078-AF07-9141BA07C9F3',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [4],
@@ -5265,6 +5284,7 @@ void main() {
         'A987FBC9-4BED-3078-CF07-9141BA07C9F3',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [5],
@@ -5283,6 +5303,7 @@ void main() {
         'A987FBC9-4BED-3078-CF07-9141BA07C9F3',
       ],
     });
+
     validatorTest({
       'validator': 'isUUID',
       'args': [6],
@@ -5304,6 +5325,7 @@ void main() {
       'valid': ['foo', 'bar', 'foobar', ''],
       'invalid': ['foobarbaz', 'barfoo'],
     });
+
     validatorTest({
       'validator': 'isIn',
       'args': [
@@ -5312,6 +5334,7 @@ void main() {
       'valid': ['foo', 'bar'],
       'invalid': ['foobar', 'barfoo', ''],
     });
+
     validatorTest({
       'validator': 'isIn',
       'args': [
@@ -5320,6 +5343,7 @@ void main() {
       'valid': ['1', '2', '3'],
       'invalid': ['4', ''],
     });
+
     validatorTest({
       'validator': 'isIn',
       'args': [
@@ -5335,6 +5359,7 @@ void main() {
       'valid': ['1', '2', '3', ''],
       'invalid': ['4'],
     });
+
     validatorTest({
       'validator': 'isIn',
       'invalid': ['foo', '']
@@ -5350,6 +5375,7 @@ void main() {
       'valid': ['foo', 'bar', 'foobar'],
       'invalid': ['foobarbaz', 'barfoo', ''],
     });
+
     validatorTest({
       'validator': 'isIn',
       'args': [
@@ -5367,6 +5393,7 @@ void main() {
       'valid': ['2011-08-04', DateTime(2011, 8, 10).toString()],
       'invalid': ['2010-07-02', '2011-08-03', DateTime(0).toString(), 'foo'],
     });
+
     validatorTest({
       'validator': 'isAfter',
       'valid': [
@@ -5378,16 +5405,62 @@ void main() {
       ],
       'invalid': ['2010-07-02', DateTime(0).toString()],
     });
+
     validatorTest({
       'validator': 'isAfter',
       'args': ['2011-08-03'],
       'valid': ['2015-09-17'],
       'invalid': ['invalid date'],
     });
+
     validatorTest({
       'validator': 'isAfter',
       'args': ['invalid date'],
       'invalid': ['invalid date', '2015-09-17'],
+    });
+  });
+
+  test('should validate dates against an end date', () {
+    validatorTest({
+      'validator': 'isBefore',
+      'args': ['2011-08-04'],
+      'valid': ['2010-07-02', '2010-08-04', DateTime(0).toString()],
+      // 08/04/2011 format is not supported
+      'invalid': ['2011-08-04', DateTime(2011, 9, 10).toString()],
+    });
+
+    validatorTest({
+      'validator': 'isBefore',
+      'args': [DateTime(2011, 7, 4).toString()],
+      'valid': ['2010-07-02', '2010-08-04', DateTime(0).toString()],
+      // 08/04/2011 format is not supported
+      'invalid': ['2011-08-04', DateTime(2011, 9, 10).toString()],
+    });
+
+    validatorTest({
+      'validator': 'isBefore',
+      'valid': [
+        '2000-08-04',
+        DateTime(0).toString(),
+        DateTime.fromMicrosecondsSinceEpoch(DateTime.now()
+                .subtract(Duration(microseconds: 86400000))
+                .microsecondsSinceEpoch)
+            .toString(),
+      ],
+      'invalid': ['2100-07-02', DateTime(2217, 10, 10).toString()],
+    });
+
+    validatorTest({
+      'validator': 'isBefore',
+      'args': ['2011-08-03'],
+      'valid': ['1999-12-31'],
+      'invalid': ['invalid date'],
+    });
+
+    validatorTest({
+      'validator': 'isBefore',
+      'args': ['invalid date'],
+      'invalid': ['invalid date', '1999-12-31'],
     });
   });
 
