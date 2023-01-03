@@ -35,6 +35,7 @@ import 'package:validator_dart/src/validators/is_in.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
+import 'package:validator_dart/src/validators/is_isbn.dart';
 import 'package:validator_dart/src/validators/is_isin.dart';
 import 'package:validator_dart/src/validators/is_iso_31661_alpha2.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
@@ -161,6 +162,7 @@ class Validator {
   static bool isIdentityCard(String str, String locale) =>
       $isIdentityCard(str, locale);
   static bool isISIN(String str) => $isISIN(str);
+  static bool isISBN(String str, dynamic? version) => $isISBN(str, version);
   static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isAscii(String str) => $isAscii(str);
   static bool isFullWidth(String str) => $isFullWidth(str);
