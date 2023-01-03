@@ -195,10 +195,12 @@ dynamic callMethod(option, List args) {
     return Validator.isSemVer(args.get(0));
   } else if (option == 'isBase32') {
     return Validator.isBase32(args.get(0), options: args.get(1));
-  } else if (option == 'isISO31661Alpha2') {
-    return Validator.isISO31661Alpha2(args.get(0));
+  } else if (option == 'isBase58') {
+    return Validator.isBase58(args.get(0));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
+  } else if (option == 'isISO31661Alpha2') {
+    return Validator.isISO31661Alpha2(args.get(0));
   }
 
   return null;
@@ -6727,33 +6729,27 @@ void main() {
     });
   });
 
-  test('should validate ISO 3166-1 alpha 2 country codes', () {
-    // from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+  test('should validate base58 strings', () {
     validatorTest({
-      'validator': 'isISO31661Alpha2',
+      'validator': 'isBase58',
       'valid': [
-        'FR',
-        'fR',
-        'GB',
-        'PT',
-        'CM',
-        'JP',
-        'PM',
-        'ZW',
-        'MM',
-        'cc',
-        'GG',
+        'BukQL',
+        '3KMUV89zab',
+        '91GHkLMNtyo98',
+        'YyjKm3H',
+        'Mkhss145TRFg',
+        '7678765677',
+        'abcodpq',
+        'AAVHJKLPY',
       ],
       'invalid': [
-        '',
-        'FRA',
-        'AA',
-        'PI',
-        'RP',
-        'WV',
-        'WL',
-        'UK',
-        'ZZ',
+        '0OPLJH',
+        'IMKLP23',
+        'KLMOmk986',
+        'LL1l1985hG',
+        '*MP9K',
+        'Zm=8JBSWY3DP',
+        ')()(=9292929MKL',
       ],
     });
   });
@@ -6834,5 +6830,36 @@ void main() {
         throw Exception('validator.isBase64() failed with "$encoded"');
       }
     }
+  });
+
+  test('should validate ISO 3166-1 alpha 2 country codes', () {
+    // from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+    validatorTest({
+      'validator': 'isISO31661Alpha2',
+      'valid': [
+        'FR',
+        'fR',
+        'GB',
+        'PT',
+        'CM',
+        'JP',
+        'PM',
+        'ZW',
+        'MM',
+        'cc',
+        'GG',
+      ],
+      'invalid': [
+        '',
+        'FRA',
+        'AA',
+        'PI',
+        'RP',
+        'WV',
+        'WL',
+        'UK',
+        'ZZ',
+      ],
+    });
   });
 }
