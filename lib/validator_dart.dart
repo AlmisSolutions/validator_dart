@@ -28,6 +28,7 @@ import 'package:validator_dart/src/validators/is_in.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
 import 'package:validator_dart/src/validators/is_ip.dart';
 import 'package:validator_dart/src/validators/is_ip_range.dart';
+import 'package:validator_dart/src/validators/is_iso_31661_alpha2.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
 import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
@@ -138,6 +139,7 @@ class Validator {
   static bool isAfter(String str, String? date) => $isAfter(str, date);
   static bool isBefore(String str, String? date) => $isBefore(str, date);
   static bool isIBAN(String str) => $isIBAN(str);
+  static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
 }

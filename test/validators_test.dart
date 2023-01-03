@@ -155,6 +155,8 @@ dynamic callMethod(option, List args) {
     return Validator.isBefore(args.get(0), args.get(1));
   } else if (option == 'isIBAN') {
     return Validator.isIBAN(args.get(0));
+  } else if (option == 'isISO31661Alpha2') {
+    return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
     return Validator.isBase64(args.get(0), options: args.get(1));
   }
@@ -5499,6 +5501,37 @@ void main() {
         'FR7630006000011234567890189@',
         'FR7630006000011234567890189😅',
         'FR763000600001123456!!🤨7890189@',
+      ],
+    });
+  });
+
+  test('should validate ISO 3166-1 alpha 2 country codes', () {
+    // from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+    validatorTest({
+      'validator': 'isISO31661Alpha2',
+      'valid': [
+        'FR',
+        'fR',
+        'GB',
+        'PT',
+        'CM',
+        'JP',
+        'PM',
+        'ZW',
+        'MM',
+        'cc',
+        'GG',
+      ],
+      'invalid': [
+        '',
+        'FRA',
+        'AA',
+        'PI',
+        'RP',
+        'WV',
+        'WL',
+        'UK',
+        'ZZ',
       ],
     });
   });
