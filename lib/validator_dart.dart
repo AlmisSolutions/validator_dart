@@ -12,6 +12,7 @@ import 'package:validator_dart/src/validators/is_after.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
 import 'package:validator_dart/src/validators/is_ascii.dart';
+import 'package:validator_dart/src/validators/is_base32.dart';
 import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_before.dart';
 import 'package:validator_dart/src/validators/is_bic.dart';
@@ -178,6 +179,8 @@ class Validator {
   static bool isVariableWidth(String str) => $isVariableWidth(str);
   static bool isSurrogatePair(String str) => $isSurrogatePair(str);
   static bool isSemVer(String str) => $isSemVer(str);
+  static bool isBase32(String str, {Base32Options? options}) =>
+      $isBase32(str, options: options);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);

@@ -6,6 +6,7 @@ import 'package:validator_dart/src/is_issn.dart';
 import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/is_alpha.dart';
 import 'package:validator_dart/src/validators/is_alphanumeric.dart';
+import 'package:validator_dart/src/validators/is_base32.dart';
 import 'package:validator_dart/src/validators/is_base64.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_credit_card.dart';
@@ -23,6 +24,8 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
+
+import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -190,6 +193,8 @@ dynamic callMethod(option, List args) {
     return Validator.isSurrogatePair(args.get(0));
   } else if (option == 'isSemVer') {
     return Validator.isSemVer(args.get(0));
+  } else if (option == 'isBase32') {
+    return Validator.isBase32(args.get(0), options: args.get(1));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6673,6 +6678,51 @@ void main() {
         '9.8.7-whatever+meta+meta',
         '99999999999999999999999.999999999999999999.99999999999999999-',
         '---RC-SNAPSHOT.12.09.1--------------------------------..12',
+      ],
+    });
+  });
+
+  test('should validate base32 strings', () {
+    validatorTest({
+      'validator': 'isBase32',
+      'valid': [
+        'ZG======',
+        'JBSQ====',
+        'JBSWY===',
+        'JBSWY3A=',
+        'JBSWY3DP',
+        'JBSWY3DPEA======',
+        'K5SWYY3PNVSSA5DPEBXG6ZA=',
+        'K5SWYY3PNVSSA5DPEBXG6===',
+      ],
+      'invalid': [
+        '12345',
+        '',
+        'JBSWY3DPtesting123',
+        'ZG=====',
+        'Z======',
+        'Zm=8JBSWY3DP',
+        '=m9vYg==',
+        'Zm9vYm/y====',
+      ],
+    });
+  });
+
+  test('should validate base32 strings with crockford alternative', () {
+    validatorTest({
+      'validator': 'isBase32',
+      'args': [Base32Options(crockford: true)],
+      'valid': [
+        '91JPRV3F41BPYWKCCGGG',
+        '60',
+        '64',
+        'B5QQA833C5Q20S3F41MQ8',
+      ],
+      'invalid': [
+        '91JPRV3F41BUPYWKCCGGG',
+        'B5QQA833C5Q20S3F41MQ8L',
+        '60I',
+        'B5QQA833OULIC5Q20S3F41MQ8',
       ],
     });
   });
