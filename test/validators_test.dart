@@ -22,8 +22,6 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
-import 'sanitizers_test.dart';
-
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -170,6 +168,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISIN(args.get(0));
   } else if (option == 'isISBN') {
     return Validator.isISBN(args.get(0), args.get(1));
+  } else if (option == 'isEAN') {
+    return Validator.isEAN(args.get(0));
   } else if (option == 'isMultibyte') {
     return Validator.isMultibyte(args.get(0));
   } else if (option == 'isAscii') {
@@ -6344,6 +6344,28 @@ void main() {
       'invalid': [
         '340101319X',
         '9784873113685',
+      ],
+    });
+  });
+
+  test('should validate EANs', () {
+    validatorTest({
+      'validator': 'isEAN',
+      'valid': [
+        '9421023610112',
+        '1234567890128',
+        '4012345678901',
+        '9771234567003',
+        '9783161484100',
+        '73513537',
+        '00012345600012',
+        '10012345678902',
+        '20012345678909',
+      ],
+      'invalid': [
+        '5901234123451',
+        '079777681629',
+        '0705632085948',
       ],
     });
   });

@@ -18,6 +18,7 @@ import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_credit_card.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
 import 'package:validator_dart/src/validators/is_divisible_by.dart';
+import 'package:validator_dart/src/validators/is_ean.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_empty.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
@@ -162,7 +163,8 @@ class Validator {
   static bool isIdentityCard(String str, String locale) =>
       $isIdentityCard(str, locale);
   static bool isISIN(String str) => $isISIN(str);
-  static bool isISBN(String str, dynamic? version) => $isISBN(str, version);
+  static bool isISBN(String str, dynamic version) => $isISBN(str, version);
+  static bool isEAN(String str) => $isEAN(str);
   static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isAscii(String str) => $isAscii(str);
   static bool isFullWidth(String str) => $isFullWidth(str);
