@@ -22,6 +22,7 @@ import 'package:validator_dart/src/validators/is_hash.dart';
 import 'package:validator_dart/src/validators/is_hex_color.dart';
 import 'package:validator_dart/src/validators/is_hexadecimal.dart';
 import 'package:validator_dart/src/validators/is_hsl.dart';
+import 'package:validator_dart/src/validators/is_iban.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_in.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
@@ -136,6 +137,7 @@ class Validator {
   static bool isIn(String str, dynamic options) => $isIn(str, options);
   static bool isAfter(String str, String? date) => $isAfter(str, date);
   static bool isBefore(String str, String? date) => $isBefore(str, date);
+  static bool isIBAN(String str) => $isIBAN(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
 }
