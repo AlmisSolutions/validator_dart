@@ -3,7 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
-import 'package:validator_dart/src/is_issn.dart';
+import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
 import 'package:validator_dart/src/validators/equals.dart';
@@ -51,6 +51,7 @@ import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_luhn_valid.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
+import 'package:validator_dart/src/validators/is_mobile_phone.dart';
 import 'package:validator_dart/src/validators/is_mongo_id.dart';
 import 'package:validator_dart/src/validators/is_multibyte.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
@@ -185,5 +186,8 @@ class Validator {
   static bool isBase58(String str) => $isBase58(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
+  static bool isMobilePhone(String str, dynamic locale,
+          {MobilePhoneOptions? options}) =>
+      $isMobilePhone(str, locale, options: options);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }
