@@ -157,6 +157,8 @@ dynamic callMethod(option, List args) {
     return Validator.isIBAN(args.get(0));
   } else if (option == 'isBIC') {
     return Validator.isBIC(args.get(0));
+  } else if (option == 'isDivisibleBy') {
+    return Validator.isDivisibleBy(args.get(0), args.get(1));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -5523,6 +5525,22 @@ void main() {
         'SBICKENXX9',
         'SBICKEN13458',
         'SBICKEN',
+      ],
+    });
+  });
+
+  test('should validate that integer strings are divisible by a number', () {
+    validatorTest({
+      'validator': 'isDivisibleBy',
+      'args': [2],
+      'valid': ['2', '4', '100', '1000'],
+      'invalid': [
+        '1',
+        '2.5',
+        '101',
+        'foo',
+        '',
+        '2020-01-06T14:31:00.135Z',
       ],
     });
   });

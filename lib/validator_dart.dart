@@ -15,6 +15,7 @@ import 'package:validator_dart/src/validators/is_before.dart';
 import 'package:validator_dart/src/validators/is_bic.dart';
 import 'package:validator_dart/src/validators/is_byte_length.dart';
 import 'package:validator_dart/src/validators/is_decimal.dart';
+import 'package:validator_dart/src/validators/is_divisible_by.dart';
 import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_empty.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
@@ -141,6 +142,8 @@ class Validator {
   static bool isBefore(String str, String? date) => $isBefore(str, date);
   static bool isIBAN(String str) => $isIBAN(str);
   static bool isBIC(String str) => $isBIC(str);
+  static bool isDivisibleBy(String str, dynamic num) =>
+      $isDivisibleBy(str, num);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
