@@ -52,6 +52,7 @@ import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
 import 'package:validator_dart/src/validators/is_rgb_color.dart';
+import 'package:validator_dart/src/validators/is_sem_ver.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_surrogate_pair.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
@@ -166,6 +167,7 @@ class Validator {
   static bool isHalfWidth(String str) => $isHalfWidth(str);
   static bool isVariableWidth(String str) => $isVariableWidth(str);
   static bool isSurrogatePair(String str) => $isSurrogatePair(str);
+  static bool isSemVer(String str) => $isSemVer(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
