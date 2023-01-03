@@ -22,8 +22,6 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
-import 'sanitizers_test.dart';
-
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -178,6 +176,8 @@ dynamic callMethod(option, List args) {
     return Validator.isHalfWidth(args.get(0));
   } else if (option == 'isVariableWidth') {
     return Validator.isVariableWidth(args.get(0));
+  } else if (option == 'isSurrogatePair') {
+    return Validator.isSurrogatePair(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6346,6 +6346,22 @@ void main() {
         'ひらがな・カタカナ、．漢字',
         '１２３４５６',
         'ｶﾀｶﾅﾞﾬ',
+      ],
+    });
+  });
+
+  test('should validate surrogate pair strings', () {
+    validatorTest({
+      'validator': 'isSurrogatePair',
+      'valid': [
+        '𠮷野𠮷',
+        '𩸽',
+        'ABC千𥧄1-2-3',
+      ],
+      'invalid': [
+        '吉野竈',
+        '鮪',
+        'ABC1-2-3',
       ],
     });
   });
