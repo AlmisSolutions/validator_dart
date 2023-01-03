@@ -43,6 +43,7 @@ import 'package:validator_dart/src/validators/is_luhn_valid.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
 import 'package:validator_dart/src/validators/is_mongo_id.dart';
+import 'package:validator_dart/src/validators/is_multibyte.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
@@ -154,6 +155,7 @@ class Validator {
   static bool isIdentityCard(String str, String locale) =>
       $isIdentityCard(str, locale);
   static bool isISIN(String str) => $isISIN(str);
+  static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);

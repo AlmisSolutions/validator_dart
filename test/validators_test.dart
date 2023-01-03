@@ -22,6 +22,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -166,6 +168,8 @@ dynamic callMethod(option, List args) {
     return Validator.isIdentityCard(args.get(0), args.get(1));
   } else if (option == 'isISIN') {
     return Validator.isISIN(args.get(0));
+  } else if (option == 'isMultibyte') {
+    return Validator.isMultibyte(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6244,6 +6248,25 @@ void main() {
         'PLLWBGD00019',
         'foo',
         '5398228707871528',
+      ],
+    });
+  });
+
+  test('should validate multibyte strings', () {
+    validatorTest({
+      'validator': 'isMultibyte',
+      'valid': [
+        'ひらがな・カタカナ、．漢字',
+        'あいうえお foobar',
+        'test＠example.com',
+        '1234abcDEｘｙｚ',
+        'ｶﾀｶﾅ',
+        '中文',
+      ],
+      'invalid': [
+        'abc',
+        'abc123',
+        '<>@" *.',
       ],
     });
   });
