@@ -22,6 +22,7 @@ import 'package:validator_dart/src/validators/is_email.dart';
 import 'package:validator_dart/src/validators/is_empty.dart';
 import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
+import 'package:validator_dart/src/validators/is_full_width.dart';
 import 'package:validator_dart/src/validators/is_hash.dart';
 import 'package:validator_dart/src/validators/is_hex_color.dart';
 import 'package:validator_dart/src/validators/is_hexadecimal.dart';
@@ -158,6 +159,7 @@ class Validator {
   static bool isISIN(String str) => $isISIN(str);
   static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isAscii(String str) => $isAscii(str);
+  static bool isFullWidth(String str) => $isFullWidth(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);

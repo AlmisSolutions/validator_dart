@@ -172,6 +172,8 @@ dynamic callMethod(option, List args) {
     return Validator.isMultibyte(args.get(0));
   } else if (option == 'isAscii') {
     return Validator.isAscii(args.get(0));
+  } else if (option == 'isFullWidth') {
+    return Validator.isFullWidth(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6287,6 +6289,23 @@ void main() {
         'ｘｙｚ０９８',
         '１２３456',
         'ｶﾀｶﾅ',
+      ],
+    });
+  });
+
+  test('should validate full-width strings', () {
+    validatorTest({
+      'validator': 'isFullWidth',
+      'valid': [
+        'ひらがな・カタカナ、．漢字',
+        '３ー０　ａ＠ｃｏｍ',
+        'Ｆｶﾀｶﾅﾞﾬ',
+        'Good＝Parts',
+      ],
+      'invalid': [
+        'abc',
+        'abc123',
+        '!"#\$%&()<>/+=-_? ~^|.,@`{}[]',
       ],
     });
   });
