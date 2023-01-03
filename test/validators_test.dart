@@ -176,6 +176,8 @@ dynamic callMethod(option, List args) {
     return Validator.isFullWidth(args.get(0));
   } else if (option == 'isHalfWidth') {
     return Validator.isHalfWidth(args.get(0));
+  } else if (option == 'isVariableWidth') {
+    return Validator.isVariableWidth(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6324,6 +6326,26 @@ void main() {
       'invalid': [
         'あいうえお',
         '００１１',
+      ],
+    });
+  });
+
+  test('should validate variable-width strings', () {
+    validatorTest({
+      'validator': 'isVariableWidth',
+      'valid': [
+        'ひらがなカタカナ漢字ABCDE',
+        '３ー０123',
+        'Ｆｶﾀｶﾅﾞﾬ',
+        'Good＝Parts',
+      ],
+      'invalid': [
+        'abc',
+        'abc123',
+        '!"#\$%&()<>/+=-_? ~^|.,@`{}[]',
+        'ひらがな・カタカナ、．漢字',
+        '１２３４５６',
+        'ｶﾀｶﾅﾞﾬ',
       ],
     });
   });

@@ -56,6 +56,7 @@ import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/src/validators/is_uuid.dart';
+import 'package:validator_dart/src/validators/is_variable_width.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/matches.dart';
 import 'package:validator_dart/src/validators/normalize_email.dart';
@@ -162,6 +163,7 @@ class Validator {
   static bool isAscii(String str) => $isAscii(str);
   static bool isFullWidth(String str) => $isFullWidth(str);
   static bool isHalfWidth(String str) => $isHalfWidth(str);
+  static bool isVariableWidth(String str) => $isVariableWidth(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
