@@ -164,6 +164,8 @@ dynamic callMethod(option, List args) {
     return Validator.isCreditCard(args.get(0), options: args.get(1));
   } else if (option == 'isIdentityCard') {
     return Validator.isIdentityCard(args.get(0), args.get(1));
+  } else if (option == 'isISIN') {
+    return Validator.isISIN(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -6220,6 +6222,28 @@ void main() {
       'error': [
         '99999999R',
         '12345678Z',
+      ],
+    });
+  });
+
+  test('should validate ISINs', () {
+    validatorTest({
+      'validator': 'isISIN',
+      'valid': [
+        'AU0000XVGZA3',
+        'DE000BAY0017',
+        'BE0003796134',
+        'SG1G55870362',
+        'GB0001411924',
+        'DE000WCH8881',
+        'PLLWBGD00016',
+        'US0378331005',
+      ],
+      'invalid': [
+        'DE000BAY0018',
+        'PLLWBGD00019',
+        'foo',
+        '5398228707871528',
       ],
     });
   });
