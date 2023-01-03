@@ -159,6 +159,8 @@ dynamic callMethod(option, List args) {
     return Validator.isBIC(args.get(0));
   } else if (option == 'isDivisibleBy') {
     return Validator.isDivisibleBy(args.get(0), args.get(1));
+  } else if (option == 'isLuhnValid') {
+    return Validator.isLuhnValid(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isBase64') {
@@ -5541,6 +5543,34 @@ void main() {
         'foo',
         '',
         '2020-01-06T14:31:00.135Z',
+      ],
+    });
+  });
+
+  test('should validate luhn numbers', () {
+    validatorTest({
+      'validator': 'isLuhnValid',
+      'valid': [
+        '0',
+        '5421',
+        '01234567897',
+        '0123456789012345678906',
+        '0123456789012345678901234567891',
+        '123456789012345678906',
+        '375556917985515',
+        '36050234196908',
+        '4716461583322103',
+        '4716-2210-5188-5662',
+        '4929 7226 5379 7141',
+      ],
+      'invalid': [
+        '',
+        '1',
+        '5422',
+        'foo',
+        'prefix6234917882863855',
+        '623491788middle2863855',
+        '6234917882863855suffix',
       ],
     });
   });

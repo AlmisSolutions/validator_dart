@@ -36,6 +36,7 @@ import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_locale.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
+import 'package:validator_dart/src/validators/is_luhn_valid.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
 import 'package:validator_dart/src/validators/is_mongo_id.dart';
@@ -144,6 +145,7 @@ class Validator {
   static bool isBIC(String str) => $isBIC(str);
   static bool isDivisibleBy(String str, dynamic num) =>
       $isDivisibleBy(str, num);
+  static bool isLuhnValid(String str) => $isLuhnValid(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isBase64(String str, {Base64Options? options}) =>
       $isBase64(str, options: options);
