@@ -41,6 +41,7 @@ import 'package:validator_dart/src/validators/is_isbn.dart';
 import 'package:validator_dart/src/validators/is_isin.dart';
 import 'package:validator_dart/src/validators/is_iso_31661_alpha2.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
+import 'package:validator_dart/src/validators/is_json.dart';
 import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_locale.dart';
@@ -168,6 +169,8 @@ class Validator {
   static bool isEAN(String str) => $isEAN(str);
   static bool isISSN(String str, {ISSNOptions? options}) =>
       $isISSN(str, options: options);
+  static bool isJSON(String str, {JSONOptions? options}) =>
+      $isJSON(str, options: options);
   static bool isMultibyte(String str) => $isMultibyte(str);
   static bool isAscii(String str) => $isAscii(str);
   static bool isFullWidth(String str) => $isFullWidth(str);

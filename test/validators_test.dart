@@ -16,6 +16,7 @@ import 'package:validator_dart/src/validators/is_float.dart';
 import 'package:validator_dart/src/validators/is_fqdn.dart';
 import 'package:validator_dart/src/validators/is_imei.dart';
 import 'package:validator_dart/src/validators/is_int.dart';
+import 'package:validator_dart/src/validators/is_json.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
@@ -173,6 +174,8 @@ dynamic callMethod(option, List args) {
     return Validator.isEAN(args.get(0));
   } else if (option == 'isISSN') {
     return Validator.isISSN(args.get(0), options: args.get(1));
+  } else if (option == 'isJSON') {
+    return Validator.isJSON(args.get(0), options: args.get(1));
   } else if (option == 'isMultibyte') {
     return Validator.isMultibyte(args.get(0));
   } else if (option == 'isAscii') {
@@ -6448,6 +6451,46 @@ void main() {
         '2434561X',
         '2434561x',
         '03785955',
+      ],
+    });
+  });
+
+  test('should validate JSON', () {
+    validatorTest({
+      'validator': 'isJSON',
+      'valid': [
+        '{ "key": "value" }',
+        '{}',
+      ],
+      'invalid': [
+        '{ key: "value" }',
+        '{ \'key\': \'value\' }',
+        'null',
+        '1234',
+        '"nope"',
+      ],
+    });
+  });
+
+  test('should validate JSON with primitives', () {
+    validatorTest({
+      'validator': 'isJSON',
+      'args': [
+        JSONOptions(allowPrimitives: true),
+      ],
+      'valid': [
+        '{ "key": "value" }',
+        '{}',
+        'null',
+        'false',
+        'true',
+      ],
+      'invalid': [
+        '{ key: "value" }',
+        '{ \'key\': \'value\' }',
+        '{ "key": value }',
+        '1234',
+        '"nope"',
       ],
     });
   });
