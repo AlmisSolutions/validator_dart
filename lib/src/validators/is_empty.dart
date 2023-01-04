@@ -4,7 +4,7 @@ class EmptyOptions {
   EmptyOptions({this.ignoreWhitespace = false});
 }
 
-bool $isEmpty(String str, {EmptyOptions? options}) {
+bool $isEmpty(dynamic str, {EmptyOptions? options}) {
   options ??= EmptyOptions();
 
   return options.ignoreWhitespace ? str.trim().isEmpty : str.isEmpty;

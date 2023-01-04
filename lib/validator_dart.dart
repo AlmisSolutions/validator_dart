@@ -6,6 +6,7 @@ library validator_dart;
 import 'package:validator_dart/src/validators/is_boolean.dart';
 import 'package:validator_dart/src/validators/is_btc_address.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
+import 'package:validator_dart/src/validators/is_data_uri.dart';
 import 'package:validator_dart/src/validators/is_ethereum_address.dart';
 import 'package:validator_dart/src/validators/is_iso_31661_alpha3.dart';
 import 'package:validator_dart/src/validators/is_iso_4217.dart';
@@ -214,4 +215,5 @@ class Validator {
   static bool isISO4217(String str) => $isISO4217(str);
   static bool isWhitelisted(String str, String chars) =>
       $isWhitelisted(str, chars);
+  static bool isDataURI(String str) => $isDataURI(str);
 }
