@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/is_boolean.dart';
 import 'package:validator_dart/src/validators/is_btc_address.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_ethereum_address.dart';
+import 'package:validator_dart/src/validators/is_iso_6391.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/blacklist.dart';
 import 'package:validator_dart/src/validators/contains.dart';
@@ -199,5 +200,6 @@ class Validator {
   static bool isBtcAddress(String str) => $isBtcAddress(str);
   static bool isBoolean(String str, {BooleanOptions? options}) =>
       $isBoolean(str, options: options);
+  static bool isISO6391(String str) => $isISO6391(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }

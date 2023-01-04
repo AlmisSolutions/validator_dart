@@ -209,6 +209,8 @@ dynamic callMethod(option, List args) {
     return Validator.isBtcAddress(args.get(0));
   } else if (option == 'isBoolean') {
     return Validator.isBoolean(args.get(0), options: args.get(1));
+  } else if (option == 'isISO6391') {
+    return Validator.isISO6391(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   }
@@ -11118,6 +11120,14 @@ void main() {
         'true ',
         ' false',
       ],
+    });
+  });
+
+  test('should validate ISO 639-1 language codes', () {
+    validatorTest({
+      'validator': 'isISO6391',
+      'valid': ['ay', 'az', 'ba', 'be', 'bg'],
+      'invalid': ['aj', 'al', 'pe', 'pf', 'abc', '123', ''],
     });
   });
 
