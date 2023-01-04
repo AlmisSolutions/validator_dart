@@ -29,6 +29,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -214,6 +216,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISO6391(args.get(0));
   } else if (option == 'isISO8601') {
     return Validator.isISO8601(args.get(0), options: args.get(1));
+  } else if (option == 'isRFC3339') {
+    return Validator.isRFC3339(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   }
@@ -11365,6 +11369,43 @@ void main() {
         '2009-05-19 14:39:22-06:00',
         '2009-05-19 14:39:22+0600',
         '2009-05-19 14:39:22-01',
+      ],
+    });
+  });
+
+  test('should validate RFC 3339 dates', () {
+    validatorTest({
+      'validator': 'isRFC3339',
+      'valid': [
+        '2009-05-19 14:39:22-06:00',
+        '2009-05-19 14:39:22+06:00',
+        '2009-05-19 14:39:22Z',
+        '2009-05-19T14:39:22-06:00',
+        '2009-05-19T14:39:22Z',
+        '2010-02-18T16:23:48.3-06:00',
+        '2010-02-18t16:23:33+06:00',
+        '2010-02-18t16:23:33+06:00',
+        '2010-02-18t16:12:23.23334444z',
+        '2010-02-18T16:23:55.2283Z',
+        '2009-05-19 14:39:22.500Z',
+        '2009-05-19 14:39:55Z',
+        '2009-05-31 14:39:55Z',
+        '2009-05-31 14:53:60Z',
+        '2010-02-18t00:23:23.33+06:00',
+        '2010-02-18t00:23:32.33+00:00',
+        '2010-02-18t00:23:32.33+23:00',
+      ],
+      'invalid': [
+        '2010-02-18t00:23:32.33+24:00',
+        '2009-05-31 14:60:55Z',
+        '2010-02-18t24:23.33+0600',
+        '2009-05-00 1439,55Z',
+        '2009-13-19 14:39:22-06:00',
+        '2009-05-00 14:39:22+0600',
+        '2009-00-1 14:39:22Z',
+        '2009-05-19T14:39:22',
+        'nonsense2021-01-01T00:00:00Z',
+        '2021-01-01T00:00:00Znonsense',
       ],
     });
   });

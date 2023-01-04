@@ -64,6 +64,7 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
+import 'package:validator_dart/src/validators/is_rfc_3339.dart';
 import 'package:validator_dart/src/validators/is_rgb_color.dart';
 import 'package:validator_dart/src/validators/is_sem_ver.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
@@ -204,5 +205,6 @@ class Validator {
   static bool isISO6391(String str) => $isISO6391(str);
   static bool isISO8601(String str, {ISO8601Options? options}) =>
       $isISO8601(str, options: options);
+  static bool isRFC3339(String str) => $isRFC3339(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }
