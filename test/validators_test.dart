@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:validator_dart/extensions/list_extensions.dart';
+import 'package:validator_dart/src/validators/is_boolean.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/contains.dart';
@@ -26,8 +27,6 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
-
-import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -208,6 +207,8 @@ dynamic callMethod(option, List args) {
     return Validator.isEthereumAddress(args.get(0));
   } else if (option == 'isBtcAddress') {
     return Validator.isBtcAddress(args.get(0));
+  } else if (option == 'isBoolean') {
+    return Validator.isBoolean(args.get(0), options: args.get(1));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
   }
@@ -11063,6 +11064,59 @@ void main() {
         'pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g',
         '17VZNX1SN5NlKa8UQFxwQbFeFc3iqRYhem',
         'BC1QW508D6QEJXTDG4Y5R3ZARVAYR0C5XW7KV8F3T4',
+      ],
+    });
+  });
+
+  test('should validate booleans', () {
+    validatorTest({
+      'validator': 'isBoolean',
+      'valid': [
+        'true',
+        'false',
+        '0',
+        '1',
+      ],
+      'invalid': [
+        '1.0',
+        '0.0',
+        'true ',
+        'False',
+        'True',
+        'yes',
+      ],
+    });
+  });
+
+  test('should validate booleans with option loose set to true', () {
+    validatorTest({
+      'validator': 'isBoolean',
+      'args': [
+        BooleanOptions(
+          loose: true,
+        ),
+      ],
+      'valid': [
+        'true',
+        'True',
+        'TRUE',
+        'false',
+        'False',
+        'FALSE',
+        '0',
+        '1',
+        'yes',
+        'Yes',
+        'YES',
+        'no',
+        'No',
+        'NO',
+      ],
+      'invalid': [
+        '1.0',
+        '0.0',
+        'true ',
+        ' false',
       ],
     });
   });
