@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library validator_dart;
 
+import 'package:validator_dart/src/validators/is_btc_address.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_ethereum_address.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
@@ -194,5 +195,6 @@ class Validator {
   static bool isCurrency(String str, {CurrencyOptions? options}) =>
       $isCurrency(str, options: options);
   static bool isEthereumAddress(String str) => $isEthereumAddress(str);
+  static bool isBtcAddress(String str) => $isBtcAddress(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
 }
