@@ -220,6 +220,8 @@ dynamic callMethod(option, List args) {
     return Validator.isRFC3339(args.get(0));
   } else if (option == 'isISO31661Alpha2') {
     return Validator.isISO31661Alpha2(args.get(0));
+  } else if (option == 'isISO31661Alpha3') {
+    return Validator.isISO31661Alpha3(args.get(0));
   }
 
   return null;
@@ -11437,6 +11439,30 @@ void main() {
         'WL',
         'UK',
         'ZZ',
+      ],
+    });
+  });
+
+  test('should validate ISO 3166-1 alpha 3 country codes', () {
+    // from https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+    validatorTest({
+      'validator': 'isISO31661Alpha3',
+      'valid': [
+        'ABW',
+        'HND',
+        'KHM',
+        'RWA',
+      ],
+      'invalid': [
+        '',
+        'FR',
+        'fR',
+        'GB',
+        'PT',
+        'CM',
+        'JP',
+        'PM',
+        'ZW',
       ],
     });
   });
