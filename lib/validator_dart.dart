@@ -59,6 +59,7 @@ import 'package:validator_dart/src/validators/is_locale.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_luhn_valid.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
+import 'package:validator_dart/src/validators/is_magnet_uri.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
 import 'package:validator_dart/src/validators/is_mobile_phone.dart';
 import 'package:validator_dart/src/validators/is_mongo_id.dart';
@@ -216,4 +217,5 @@ class Validator {
   static bool isWhitelisted(String str, String chars) =>
       $isWhitelisted(str, chars);
   static bool isDataURI(String str) => $isDataURI(str);
+  static bool isMagnetURI(String str) => $isMagnetURI(str);
 }
