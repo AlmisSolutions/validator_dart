@@ -75,6 +75,7 @@ import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/src/validators/is_uuid.dart';
 import 'package:validator_dart/src/validators/is_variable_width.dart';
+import 'package:validator_dart/src/validators/is_whitelisted.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/matches.dart';
 import 'package:validator_dart/src/validators/normalize_email.dart';
@@ -211,4 +212,6 @@ class Validator {
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isISO31661Alpha3(String str) => $isISO31661Alpha3(str);
   static bool isISO4217(String str) => $isISO4217(str);
+  static bool isWhitelisted(String str, String chars) =>
+      $isWhitelisted(str, chars);
 }

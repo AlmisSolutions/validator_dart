@@ -224,6 +224,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISO31661Alpha3(args.get(0));
   } else if (option == 'isISO4217') {
     return Validator.isISO4217(args.get(0));
+  } else if (option == 'isWhitelisted') {
+    return Validator.isWhitelisted(args.get(0), args.get(1));
   }
 
   return null;
@@ -11496,6 +11498,15 @@ void main() {
         'EURO',
         'euro',
       ],
+    });
+  });
+
+  test('should validate whitelisted characters', () {
+    validatorTest({
+      'validator': 'isWhitelisted',
+      'args': ['abcdefghijklmnopqrstuvwxyz-'],
+      'valid': ['foo', 'foobar', 'baz-foo'],
+      'invalid': ['foo bar', 'fo.bar', 'türkçe'],
     });
   });
 }
