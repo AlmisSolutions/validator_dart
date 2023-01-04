@@ -54,6 +54,7 @@ import 'package:validator_dart/src/validators/is_iso_31661_alpha2.dart';
 import 'package:validator_dart/src/validators/is_isrc.dart';
 import 'package:validator_dart/src/validators/is_json.dart';
 import 'package:validator_dart/src/validators/is_jwt.dart';
+import 'package:validator_dart/src/validators/is_lat_long.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_locale.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
@@ -218,4 +219,6 @@ class Validator {
       $isWhitelisted(str, chars);
   static bool isDataURI(String str) => $isDataURI(str);
   static bool isMagnetURI(String str) => $isMagnetURI(str);
+  static bool isLatLong(String str, {LatLongOptions? options}) =>
+      $isLatLong(str, options: options);
 }
