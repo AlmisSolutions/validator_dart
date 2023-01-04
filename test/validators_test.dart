@@ -222,6 +222,8 @@ dynamic callMethod(option, List args) {
     return Validator.isISO31661Alpha2(args.get(0));
   } else if (option == 'isISO31661Alpha3') {
     return Validator.isISO31661Alpha3(args.get(0));
+  } else if (option == 'isISO4217') {
+    return Validator.isISO4217(args.get(0));
   }
 
   return null;
@@ -11463,6 +11465,36 @@ void main() {
         'JP',
         'PM',
         'ZW',
+      ],
+    });
+  });
+
+  test('should validate ISO 4217 corrency codes', () {
+    // from https://en.wikipedia.org/wiki/ISO_4217
+    validatorTest({
+      'validator': 'isISO4217',
+      'valid': [
+        'AED',
+        'aed',
+        'AUD',
+        'CUC',
+        'EUR',
+        'GBP',
+        'LYD',
+        'MYR',
+        'SGD',
+        'USD',
+      ],
+      'invalid': [
+        '',
+        '\$',
+        'US',
+        'us',
+        'AAA',
+        'aaa',
+        'RWA',
+        'EURO',
+        'euro',
       ],
     });
   });

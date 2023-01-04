@@ -8,6 +8,7 @@ import 'package:validator_dart/src/validators/is_btc_address.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_ethereum_address.dart';
 import 'package:validator_dart/src/validators/is_iso_31661_alpha3.dart';
+import 'package:validator_dart/src/validators/is_iso_4217.dart';
 import 'package:validator_dart/src/validators/is_iso_6391.dart';
 import 'package:validator_dart/src/validators/is_iso_8601.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
@@ -209,4 +210,5 @@ class Validator {
   static bool isRFC3339(String str) => $isRFC3339(str);
   static bool isISO31661Alpha2(String str) => $isISO31661Alpha2(str);
   static bool isISO31661Alpha3(String str) => $isISO31661Alpha3(str);
+  static bool isISO4217(String str) => $isISO4217(str);
 }
