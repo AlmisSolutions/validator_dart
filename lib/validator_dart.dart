@@ -69,6 +69,7 @@ import 'package:validator_dart/src/validators/is_numeric.dart';
 import 'package:validator_dart/src/validators/is_octal.dart';
 import 'package:validator_dart/src/validators/is_passport_number.dart';
 import 'package:validator_dart/src/validators/is_port.dart';
+import 'package:validator_dart/src/validators/is_postal_code.dart';
 import 'package:validator_dart/src/validators/is_rfc_3339.dart';
 import 'package:validator_dart/src/validators/is_rgb_color.dart';
 import 'package:validator_dart/src/validators/is_sem_ver.dart';
@@ -221,4 +222,6 @@ class Validator {
   static bool isMagnetURI(String str) => $isMagnetURI(str);
   static bool isLatLong(String str, {LatLongOptions? options}) =>
       $isLatLong(str, options: options);
+  static bool isPostalCode(String str, String locale) =>
+      $isPostalCode(str, locale);
 }

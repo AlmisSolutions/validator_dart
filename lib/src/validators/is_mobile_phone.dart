@@ -185,10 +185,6 @@ class MobilePhoneOptions {
 bool $isMobilePhone(String str, dynamic locale, {MobilePhoneOptions? options}) {
   options ??= MobilePhoneOptions();
 
-  if (locale == 'en-ZW' || (locale is List && locale.contains('en-ZW'))) {
-    int x = 0;
-  }
-
   if (options.strictMode && !str.startsWith('+')) {
     return false;
   }
