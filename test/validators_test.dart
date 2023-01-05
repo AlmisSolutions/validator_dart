@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:validator_dart/extensions/list_extensions.dart';
 import 'package:validator_dart/src/validators/is_boolean.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
+import 'package:validator_dart/src/validators/is_date.dart';
 import 'package:validator_dart/src/validators/is_iso_8601.dart';
 import 'package:validator_dart/src/validators/is_issn.dart';
 import 'package:validator_dart/src/validators/contains.dart';
@@ -235,6 +236,8 @@ dynamic callMethod(option, List args) {
     return Validator.isPostalCode(args.get(0), args.get(1));
   } else if (option == 'isMimeType') {
     return Validator.isMimeType(args.get(0));
+  } else if (option == 'isDate') {
+    return Validator.isDate(args.get(0), options: args.get(1));
   }
 
   return null;
@@ -12271,6 +12274,185 @@ void main() {
         'message/http; charset=utf-8',
         'model/vnd.gtw; charset=utf-8',
         'video/mp4; charset=utf-8',
+      ],
+    });
+  });
+
+  test('should validate date', () {
+    validatorTest({
+      'validator': 'isDate',
+      'valid': [
+        DateTime.now(),
+        DateTime(2014, 2, 15),
+        DateTime.parse('2014-03-15'),
+        '2020-02-29',
+      ],
+      'invalid': [
+        '',
+        '15072002',
+        null,
+        {'year': 2002, 'month': 7, 'day': 15},
+        42,
+        // toString() { return '[object Date]'; }, // faking
+        '2020-02-30', // invalid date
+        '2019-02-29', // non-leap year
+        '2020-04-31', // invalid date
+        '2020/03-15', // mixed delimiter
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          format: 'dd/MM/yyyy',
+        ),
+      ],
+      'valid': [
+        '15-07-2002',
+        '15/07/2002',
+      ],
+      'invalid': [
+        '15/7/2002',
+        '15-7-2002',
+        '15/7/02',
+        '15-7-02',
+        '15-07/2002',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          format: 'dd/MM/yy',
+        ),
+      ],
+      'valid': [
+        '15-07-02',
+        '15/07/02',
+      ],
+      'invalid': [
+        '15/7/2002',
+        '15-7-2002',
+        '15/07-02',
+      ],
+    });
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          format: 'd/M/yy',
+        ),
+      ],
+      'valid': [
+        '5-7-02',
+        '5/7/02',
+      ],
+      'invalid': [
+        '5/07/02',
+        '15/7/02',
+        '15-7-02',
+        '5/7-02',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          format: 'dd/MM/yyyy',
+          strictMode: true,
+        )
+      ],
+      'valid': [
+        '15/07/2002',
+      ],
+      'invalid': [
+        '15-07-2002',
+        '15/7/2002',
+        '15-7-2002',
+        '15/7/02',
+        '15-7-02',
+        '15-07/2002',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          strictMode: true,
+        )
+      ],
+      'valid': [
+        '2020/01/15',
+        '2014/02/15',
+        '2014/03/15',
+        '2020/02/29',
+      ],
+      'invalid': [
+        '2014-02-15',
+        '2020-02-29',
+        '15-07/2002',
+        DateTime.now(),
+        DateTime(2014, 2, 15),
+        DateTime.parse('2014-03-15'),
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          delimiters: ['/', ' '],
+        ),
+      ],
+      'valid': [
+        DateTime.now(),
+        DateTime(2014, 2, 15),
+        DateTime.parse('2014-03-15'),
+        '2020/02/29',
+        '2020 02 29',
+      ],
+      'invalid': [
+        '2020-02-29',
+        '',
+        '15072002',
+        null,
+        {'year': 2002, 'month': 7, 'day': 15},
+        42,
+        // { toString() { return '[object Date]'; } },
+        '2020/02/30',
+        '2019/02/29',
+        '2020/04/31',
+        '2020/03-15',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isDate',
+      'args': [
+        DateOptions(
+          format: 'MM.dd.yyyy',
+          delimiters: ['.'],
+          strictMode: true,
+        )
+      ],
+      'valid': [
+        '01.15.2020',
+        '02.15.2014',
+        '03.15.2014',
+        '02.29.2020',
+      ],
+      'invalid': [
+        '2014-02-15',
+        '2020-02-29',
+        '15-07/2002',
+        DateTime.now(),
+        DateTime(2014, 2, 15),
+        DateTime.parse('2014-03-15'),
+        '29.02.2020',
       ],
     });
   });

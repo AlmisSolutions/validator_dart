@@ -7,6 +7,7 @@ import 'package:validator_dart/src/validators/is_boolean.dart';
 import 'package:validator_dart/src/validators/is_btc_address.dart';
 import 'package:validator_dart/src/validators/is_currency.dart';
 import 'package:validator_dart/src/validators/is_data_uri.dart';
+import 'package:validator_dart/src/validators/is_date.dart';
 import 'package:validator_dart/src/validators/is_ethereum_address.dart';
 import 'package:validator_dart/src/validators/is_iso_31661_alpha3.dart';
 import 'package:validator_dart/src/validators/is_iso_4217.dart';
@@ -226,4 +227,6 @@ class Validator {
   static bool isPostalCode(String str, String locale) =>
       $isPostalCode(str, locale);
   static bool isMimeType(String str) => $isMimeType(str);
+  static bool isDate(dynamic input, {DateOptions? options}) =>
+      $isDate(input, options: options);
 }
