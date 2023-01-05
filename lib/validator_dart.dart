@@ -62,6 +62,7 @@ import 'package:validator_dart/src/validators/is_luhn_valid.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_magnet_uri.dart';
 import 'package:validator_dart/src/validators/is_md5.dart';
+import 'package:validator_dart/src/validators/is_mime_type.dart';
 import 'package:validator_dart/src/validators/is_mobile_phone.dart';
 import 'package:validator_dart/src/validators/is_mongo_id.dart';
 import 'package:validator_dart/src/validators/is_multibyte.dart';
@@ -224,4 +225,5 @@ class Validator {
       $isLatLong(str, options: options);
   static bool isPostalCode(String str, String locale) =>
       $isPostalCode(str, locale);
+  static bool isMimeType(String str) => $isMimeType(str);
 }
