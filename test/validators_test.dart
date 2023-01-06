@@ -31,6 +31,8 @@ import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
 
+import 'sanitizers_test.dart';
+
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
 
@@ -242,6 +244,8 @@ dynamic callMethod(option, List args) {
     } else {
       return Validator.isTaxID(args.get(0));
     }
+  } else if (option == 'isSlug') {
+    return Validator.isSlug(args.get(0));
   } else if (option == 'isDate') {
     return Validator.isDate(args.get(0), options: args.get(1));
   }
@@ -12816,6 +12820,30 @@ void main() {
         '07-1234567',
         '28-1234567',
         '96-1234567',
+      ],
+    });
+  });
+
+  test('should validate slug', () {
+    validatorTest({
+      'validator': 'isSlug',
+      'valid': [
+        'foo',
+        'foo-bar',
+        'foo_bar',
+        'foo-bar-foo',
+        'foo-bar_foo',
+        'foo-bar_foo*75-b4r-**_foo',
+        'foo-bar_foo*75-b4r-**_foo-&&',
+      ],
+      'invalid': [
+        'not-----------slug',
+        '@#_\$@',
+        '-not-slug',
+        'not-slug-',
+        '_not-slug',
+        'not-slug_',
+        'not slug',
       ],
     });
   });
