@@ -27,11 +27,10 @@ import 'package:validator_dart/src/validators/is_length.dart';
 import 'package:validator_dart/src/validators/is_mac_address.dart';
 import 'package:validator_dart/src/validators/is_mobile_phone.dart';
 import 'package:validator_dart/src/validators/is_numeric.dart';
+import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/validator_dart.dart';
 import 'package:test/test.dart';
-
-import 'sanitizers_test.dart';
 
 void validatorTest(Map<String, dynamic> options) {
   List<dynamic> args = (options['args'] as List? ?? []).map((e) => e).toList();
@@ -246,6 +245,8 @@ dynamic callMethod(option, List args) {
     }
   } else if (option == 'isSlug') {
     return Validator.isSlug(args.get(0));
+  } else if (option == 'isStrongPassword') {
+    return Validator.isStrongPassword(args.get(0), options: args.get(1));
   } else if (option == 'isDate') {
     return Validator.isDate(args.get(0), options: args.get(1));
   }
@@ -12844,6 +12845,37 @@ void main() {
         '_not-slug',
         'not-slug_',
         'not slug',
+      ],
+    });
+  });
+
+  test('should validate strong passwords', () {
+    validatorTest({
+      'validator': 'isStrongPassword',
+      'args': [
+        PasswordOptions(
+          minLength: 8,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        )
+      ],
+      'valid': [
+        '%2%k{7BsL"M%Kd6e',
+        'EXAMPLE of very long_password123!',
+        'mxH_+2vs&54_+H3P',
+        '+&DxJ=X7-4L8jRCD',
+        'etV*p%Nr6w&H%FeF',
+      ],
+      'invalid': [
+        '',
+        'password',
+        'hunter2',
+        'hello world',
+        'passw0rd',
+        'password!',
+        'PASSWORD!',
       ],
     });
   });
