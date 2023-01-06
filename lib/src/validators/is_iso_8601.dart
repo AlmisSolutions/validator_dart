@@ -47,8 +47,8 @@ bool isValidDate(String str) {
 
   final d =
       DateTime.tryParse('$year-${monthString ?? '01'}-${dayString ?? '01'}');
-  if (d != null) {
-    return d.year == year && d.month == month && d.day == day;
+  if (month != null && day != null) {
+    return d!.year == year && d.month == month && d.day == day;
   }
   return true;
 }
