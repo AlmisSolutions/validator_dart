@@ -84,6 +84,7 @@ import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/src/validators/is_uuid.dart';
 import 'package:validator_dart/src/validators/is_variable_width.dart';
+import 'package:validator_dart/src/validators/is_vat.dart';
 import 'package:validator_dart/src/validators/is_whitelisted.dart';
 import 'package:validator_dart/src/validators/ltrim.dart';
 import 'package:validator_dart/src/validators/matches.dart';
@@ -237,4 +238,5 @@ class Validator {
       $isDate(input, options: options);
   static bool isLicensePlate(String str, String locale) =>
       $isLicensePlate(str, locale);
+  static bool isVAT(String str, String countryCode) => $isVAT(str, countryCode);
 }
