@@ -25,7 +25,7 @@ Map<String, String> zip(List<String> date, List<String> format) {
   final zippedArr = <String, String>{};
   final len = math.min(date.length, format.length);
   for (int i = 0; i < len; i++) {
-    zippedArr[date[i]] = format[i];
+    zippedArr[format[i]] = date[i];
   }
   return zippedArr;
 }
@@ -57,8 +57,8 @@ bool $isDate(dynamic input, {DateOptions? options}) {
     final dateObj = <String, String>{};
 
     for (final entry in dateAndFormat.entries) {
-      var dateWord = entry.key;
-      var formatWord = entry.value;
+      var formatWord = entry.key;
+      var dateWord = entry.value;
 
       if (dateWord.length != formatWord.length) {
         return false;

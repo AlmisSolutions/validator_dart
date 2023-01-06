@@ -77,6 +77,7 @@ import 'package:validator_dart/src/validators/is_rgb_color.dart';
 import 'package:validator_dart/src/validators/is_sem_ver.dart';
 import 'package:validator_dart/src/validators/is_strong_password.dart';
 import 'package:validator_dart/src/validators/is_surrogate_pair.dart';
+import 'package:validator_dart/src/validators/is_tax_id.dart';
 import 'package:validator_dart/src/validators/is_uppercase.dart';
 import 'package:validator_dart/src/validators/is_url.dart';
 import 'package:validator_dart/src/validators/is_uuid.dart';
@@ -227,6 +228,8 @@ class Validator {
   static bool isPostalCode(String str, String locale) =>
       $isPostalCode(str, locale);
   static bool isMimeType(String str) => $isMimeType(str);
+  static bool isTaxID(String str, {String? locale = 'en-US'}) =>
+      $isTaxID(str, locale: locale);
   static bool isDate(dynamic input, {DateOptions? options}) =>
       $isDate(input, options: options);
 }
