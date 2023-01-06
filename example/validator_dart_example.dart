@@ -1,9 +1,9 @@
-void main() {
-  String ignore = '@_-+';
-  String escaped = ignore.replaceAllMapped(
-    RegExp(r'[\[\]{}()*+?.,\\^$|#\s]'),
-    (match) => '\\${match.group(0)}',
-  );
+import 'package:validator_dart/validator_dart.dart';
 
-  print(escaped);
+void main() {
+  var isEmail = Validator.isEmail('test@gmail.com');
+  print(isEmail); // true
+
+  var isPostalCode = Validator.isPostalCode('99950', 'US');
+  print(isPostalCode); // true
 }
