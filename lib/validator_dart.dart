@@ -57,6 +57,7 @@ import 'package:validator_dart/src/validators/is_json.dart';
 import 'package:validator_dart/src/validators/is_jwt.dart';
 import 'package:validator_dart/src/validators/is_lat_long.dart';
 import 'package:validator_dart/src/validators/is_length.dart';
+import 'package:validator_dart/src/validators/is_license_plate.dart';
 import 'package:validator_dart/src/validators/is_locale.dart';
 import 'package:validator_dart/src/validators/is_lowercase.dart';
 import 'package:validator_dart/src/validators/is_luhn_valid.dart';
@@ -234,4 +235,6 @@ class Validator {
   static bool isSlug(String str) => $isSlug(str);
   static bool isDate(dynamic input, {DateOptions? options}) =>
       $isDate(input, options: options);
+  static bool isLicensePlate(String str, String locale) =>
+      $isLicensePlate(str, locale);
 }

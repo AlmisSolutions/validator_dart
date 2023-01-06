@@ -249,6 +249,8 @@ dynamic callMethod(option, List args) {
     return Validator.isStrongPassword(args.get(0), options: args.get(1));
   } else if (option == 'isDate') {
     return Validator.isDate(args.get(0), options: args.get(1));
+  } else if (option == 'isLicensePlate') {
+    return Validator.isLicensePlate(args.get(0), args.get(1));
   }
 
   return null;
@@ -13055,6 +13057,277 @@ void main() {
         DateTime(2014, 2, 15),
         DateTime.parse('2014-03-15'),
         '29.02.2020',
+      ],
+    });
+  });
+
+  test('should be valid license plate', () {
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['pt-PT'],
+      'valid': [
+        'AA-12-34',
+        '12·34·AB',
+        '12·AB·34',
+        'AB 12 CD',
+        'AB12CD',
+      ],
+      'invalid': [
+        '',
+        'notalicenseplate',
+        'A1-B2-C3',
+        'ABC-1-EF',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['de-LI'],
+      'valid': [
+        'FL 1',
+        'FL 99999',
+        'FL 1337',
+      ],
+      'invalid': [
+        '',
+        'FL 999999',
+        'AB 12345',
+        'FL -1',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['de-DE'],
+      'valid': [
+        'M A 1',
+        'M A 12',
+        'M A 123',
+        'M A 1234',
+        'M AB 1',
+        'M AB 12',
+        'M AB 123',
+        'M AB 1234',
+        'FS A 1',
+        'FS A 12',
+        'FS A 123',
+        'FS A 1234',
+        'FS AB 1',
+        'FS AB 12',
+        'FS AB 123',
+        'FS AB 1234',
+        'FSAB1234',
+        'FS-AB-1234',
+        'FS AB 1234 H',
+        'FS AB 1234 E',
+        'FSAB1234E',
+        'FS-AB-1234-E',
+        'FS AB-1234-E',
+        'FSAB1234 E',
+        'FS AB1234E',
+        'LRO AB 123',
+        'LRO-AB-123-E',
+        'LRO-AB-123E',
+        'LRO-AB-123 E',
+        'LRO-AB-123-H',
+        'LRO-AB-123H',
+        'LRO-AB-123 H',
+      ],
+      'invalid': [
+        'YY AB 123',
+        'PAF AB 1234',
+        'M ABC 123',
+        'M AB 12345',
+        'FS AB 1234 A',
+        'LRO-AB-1234',
+        'HRO ABC 123',
+        'HRO ABC 1234',
+        'LDK-AB-1234-E',
+        'ÖHR FA 123D',
+        'MZG-AB-123X',
+        'OBG-ABD-123',
+        'PAF-AB2-123',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['fi-FI'],
+      'valid': [
+        'ABC-123',
+        'ABC 123',
+        'ABC123',
+        'A100',
+        'A 100',
+        'A-100',
+        'C10001',
+        'C 10001',
+        'C-10001',
+        '123-ABC',
+        '123 ABC',
+        '123ABC',
+        '123-A',
+        '123 A',
+        '123A',
+        '199AA',
+        '199 AA',
+        '199-AA',
+      ],
+      'invalid': [
+        ' ',
+        'A-1',
+        'A1A-100',
+        '1-A-2',
+        'C1234567',
+        'A B C 1 2 3',
+        'abc-123',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['sq-AL'],
+      'valid': [
+        'AA 000 AA',
+        'ZZ 999 ZZ',
+      ],
+      'invalid': [
+        '',
+        'AA 0 A',
+        'AAA 00 AAA',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['cs-CZ'],
+      'valid': [
+        'ALA4011',
+        '4A23000',
+        'DICTAT0R',
+        'VETERAN',
+        'AZKVIZ8',
+        '2A45876',
+        'DIC-TAT0R',
+      ],
+      'invalid': [
+        '',
+        'invalidlicenseplate',
+        'LN5758898',
+        'X-|\$|-X',
+        'AE0F-OP4',
+        'GO0MER',
+        '2AAAAAAAA',
+        'FS AB 1234 E',
+        'GB999 9999 00',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['pt-BR'],
+      'valid': [
+        'ABC1234',
+        'ABC 1234',
+        'ABC-1234',
+        'ABC1D23',
+        'ABC1K23',
+        'ABC1Z23',
+        'ABC 1D23',
+        'ABC-1D23',
+      ],
+      'invalid': [
+        '',
+        'AA 0 A',
+        'AAA 00 AAA',
+        'ABCD123',
+        'AB12345',
+        'AB123DC',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['any'],
+      'valid': [
+        'FL 1',
+        'FS AB 123',
+      ],
+      'invalid': [
+        '',
+        'FL 999999',
+        'FS AB 1234 A',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['asdfasdf'],
+      'error': [
+        'FL 1',
+        'FS AB 123',
+        'FL 999999',
+        'FS AB 1234 A',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['sv-SE'],
+      'valid': [
+        'ABC 123',
+        'ABC 12A',
+        'ABC123',
+        'ABC12A',
+        'A WORD',
+        'WORD',
+        'ÅSNA',
+        'EN VARG',
+        'CERISE',
+        'AA',
+        'ABCDEFG',
+        'ÅÄÖ',
+        'ÅÄÖ ÅÄÖ',
+      ],
+      'invalid': [
+        '',
+        '    ',
+        'IQV 123',
+        'IQV123',
+        'ABI 12Q',
+        'ÅÄÖ 123',
+        'ÅÄÖ 12A',
+        'AB1 A23',
+        'AB1 12A',
+        'lower',
+        'abc 123',
+        'abc 12A',
+        'abc 12a',
+        'AbC 12a',
+        'WORDLONGERTHANSEVENCHARACTERS',
+        'A',
+        'ABC-123',
+      ],
+    });
+
+    validatorTest({
+      'validator': 'isLicensePlate',
+      'args': ['en-IN'],
+      'valid': [
+        'MH 04 AD 0001',
+        'HR26DQ0001',
+        'WB-04-ZU-2001',
+        'KL 18 X 5800',
+        'DL 4 CAF 4856',
+        'KA-41CE-5289',
+        'GJ 04-AD 5822',
+      ],
+      'invalid': [
+        'mh04ad0045',
+        'invalidlicenseplate',
+        '4578',
+        '',
+        'GJ054GH4785'
       ],
     });
   });
