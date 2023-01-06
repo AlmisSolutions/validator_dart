@@ -155,9 +155,9 @@ final commaDecimal = [
 ];
 
 class Alpha {
-  Map<String, dynamic> get alpha => _alpha;
-  Map<String, dynamic> get alphanumeric => _alphanumeric;
-  Map<String, dynamic> get decimal => _decimal;
+  Map<String, RegExp> get alpha => _alpha;
+  Map<String, RegExp> get alphanumeric => _alphanumeric;
+  Map<String, String> get decimal => _decimal;
 
   Alpha() {
     for (var i = 0; i < englishLocales.length; i++) {

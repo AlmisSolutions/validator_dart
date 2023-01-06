@@ -29,7 +29,7 @@ bool $isAlphanumeric(String str,
   }
 
   if (alphanumeric.containsKey(locale)) {
-    return alphanumeric[locale].hasMatch(str);
+    return alphanumeric[locale]!.hasMatch(str);
   }
   throw Exception("Invalid locale '$locale'");
 }
