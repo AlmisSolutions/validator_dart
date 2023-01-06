@@ -1,4 +1,4 @@
-# validator-dart
+# validator_dart
 
 This library is written entirely in pure Dart code, it includes a range of validation and sanitization functions that can be easily integrated into your project.
 
@@ -10,12 +10,12 @@ A big shoutout to the amazing author and contributors of the original validator.
 
 With Dart:
 ```
-dart pub add validator-dart
+dart pub add validator_dart
 ```
 
 With Flutter:
 ```
-flutter pub add validator-dart
+flutter pub add validator_dart
 ```
 
 # Usage
